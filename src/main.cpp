@@ -9,8 +9,8 @@
 
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // ---- END VEXCODE CONFIGURED DEVICES ----
-
 #include "vex.h"
+//#include "Autons.h"
 
 using namespace vex;
 
@@ -49,7 +49,7 @@ void pre_auton(void) {
 
 void autonomous(void) {
   // ..........................................................................
-  // Insert autonomous user code here.
+  test();
   // ..........................................................................
 }
 
