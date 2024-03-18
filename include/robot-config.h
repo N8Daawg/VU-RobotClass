@@ -6,7 +6,9 @@
 /*    Description:  declerations of robot motors and devices                  */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
+#include "classes/drivetrain.hpp"
 using namespace vex;
+//#include "classes/drivetrain.hpp"
 
 extern brain Brain;
 
@@ -18,6 +20,8 @@ extern motor BL;
 extern motor FR;
 extern motor BR;
 extern inertial Gyro;
+
+extern driveTrain drive;
 
 // CATA Setup
 extern motor CataLeft;

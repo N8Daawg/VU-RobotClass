@@ -6,7 +6,6 @@
 /*    Description:  file for storing drivetrain class code                    */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-#include "vex.h"
 
 #ifndef DRIVETRAIN_HPP
 #define DRIVETRAIN_HPP
@@ -29,7 +28,13 @@ public:
     );
 
     ~driveTrain();
+
+    /**
+     * @brief stops all motors in the drivetrain
+    */
+    void stopDriveTrain(vex::brakeType Brake);
 };
+
 
 #endif
 

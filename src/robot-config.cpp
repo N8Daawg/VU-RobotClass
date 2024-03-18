@@ -25,7 +25,7 @@ motor FrontRight = motor(PORT15, ratio18_1, false);
 motor BackRight = motor(PORT17, ratio18_1, false);
 inertial Gyro = inertial(PORT21);
 
-drive = new driveTrain(FrontLeft, FrontRight, BackLeft, BackRight, Gyro);
+driveTrain drive(FrontLeft, FrontRight, BackLeft, BackRight, Gyro);
 
 
 // Intake Setup

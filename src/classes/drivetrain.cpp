@@ -6,7 +6,6 @@
 /*    Description:  file for storing drivetrain class code                    */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-#include "classes/drivetrain.hpp"
 #include "vex.h"
 
 
@@ -26,3 +25,7 @@ driveTrain::driveTrain(
 
 driveTrain::~driveTrain(){}
 
+void driveTrain::stopDriveTrain(vex::brakeType Brake){
+    FL->stop(Brake);FR->stop(Brake);
+    BL->stop(Brake);BR->stop(Brake);
+}
