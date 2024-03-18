@@ -17,6 +17,8 @@
 
 #include "robot-config.h"
 #include "Autons.h"
+#include "AutonUtil/positions.hpp"
+#include "AutonUtil/util.hpp"
 
 #define waitUntil(condition)                                                   \
   do {                                                                         \

@@ -1,25 +1,27 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       Autons.h                                                  */
+/*    Module:       Voids.cpp                                                 */
 /*    Author:       Nathan Beals                                              */
 /*    Created:      Sun March 17 2024                                         */
-/*    Description:  file for storing autonomous programs                      */
+/*    Description:  file meant to hold Drivetrain Positional functions        */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
+#include "vex.h"
+#include "AutonUtil/positions.hpp"
 
+/* Drivetrain utility*/
+void straight(){
 
+}
 
-/**
- * @brief void containing autonomous test code
-*/
-void test();
+void pointTurn(){
 
-/**
- * @brief void containing autonomous match code
-*/
-void match();
+}
 
-/**
- * @brief void containing autonomous skills code
-*/
-void skills();
+void arc(){
+
+}
+
+void sidePivot(){
+
+}

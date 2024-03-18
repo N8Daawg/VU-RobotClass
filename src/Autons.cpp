@@ -6,11 +6,10 @@
 /*    Description:  file for storing autonomous programs                      */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-
-#include "AutonUtil/voids.hpp"
+#include "vex.h"
 
 void test(){
-
+    setbrakes(hold);
 }
 
 void match(){

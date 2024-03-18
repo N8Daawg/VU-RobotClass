@@ -7,10 +7,29 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
+// BROKEN STUFF 15X15 BOT  
+// PORTS 1, 14, 7,8 
+
 // ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller           controller             
+//
+// FL                   Motor         19        
+// BL                   Motor         10       
+// FR                   Motor         15        
+// BR                   Motor         17        
+// Gyro                 Gyroscope     21
+//         
+// pneumaticIntake      pneumatics    G
+// Intake               Motor         2
+//
+// CataLeft             Motor         6                
+// CataRight            Motor         3
+//
+// pneumaticWing        pneumatics    H
 // ---- END VEXCODE CONFIGURED DEVICES ----
 #include "vex.h"
-//#include "Autons.h"
 
 using namespace vex;
 
@@ -49,7 +68,7 @@ void pre_auton(void) {
 
 void autonomous(void) {
   // ..........................................................................
-  test();
+  match();
   // ..........................................................................
 }
 
