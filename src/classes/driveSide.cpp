@@ -23,6 +23,25 @@ driveSide::~driveSide(){}
 /*---------------------------------------------------------------------------*/
 
 void driveSide::stopDriveSide(vex::brakeType Brake){
-    fMotor->stop(Brake);bMotor->stop(Brake);
-    
+    fMotor->stop(Brake);
+    bMotor->stop(Brake);
+}
+
+void driveSide::setVelocities(double v){
+    fMotor->setVelocity(v, pct);
+    bMotor->setVelocity(v, pct);
+}
+
+/*---------------------------------------------------------------------------*/
+/*----------------------------DriveSide Movements----------------------------*/
+/*---------------------------------------------------------------------------*/
+
+void driveSide::Spin(vex::directionType dir, double voltage, vex::voltageUnits units){
+    fMotor->spin(dir, voltage, units);
+    bMotor->spin(dir, voltage, units);
+}
+
+void driveSide::SpinTo(double rotation, double velocity){
+    fMotor->spinTo(rotation, degrees, velocity, velocityUnits::pct);
+    bMotor->spinTo(rotation, degrees, velocity, velocityUnits::pct);
 }

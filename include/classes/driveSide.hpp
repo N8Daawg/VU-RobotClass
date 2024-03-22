@@ -31,6 +31,19 @@ class driveSide{
          * @brief stops all motors in the drivetrain
         */
         void stopDriveSide(vex::brakeType Brake);
+
+        /**
+         * @brief sets velocities of all motors in drivetrain
+        */
+        void setVelocities(double v);
+
+        /*---------------------------------------------------------------------------*/
+        /*----------------------------DriveSide Movements----------------------------*/
+        /*---------------------------------------------------------------------------*/
+
+        void Spin(vex::directionType dir, double voltage, vex::voltageUnits units);
+
+        void SpinTo(double rotation, double velocity);
 };
 
 #endif

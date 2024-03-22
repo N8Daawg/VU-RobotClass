@@ -40,8 +40,8 @@ void driveTrain::stopDriveTrain(vex::brakeType Brake){
 }
 
 void driveTrain::setVelocities(double v){
-    FL->setVelocity(v, pct);FR->setVelocity(v, pct);
-    BL->setVelocity(v, pct);BR->setVelocity(v, pct);
+    Lside->setVelocities(v);
+    Rside->setVelocities(v);
 }
 
 
