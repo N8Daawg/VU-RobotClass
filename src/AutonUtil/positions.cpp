@@ -9,7 +9,7 @@
 #include "vex.h"
 #include "AutonUtil/positions.hpp"
 
-/* Drivetrain utility*/
+/* Drivetrain movements*/
 void straight(){
 
 }
