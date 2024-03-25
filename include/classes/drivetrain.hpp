@@ -19,6 +19,11 @@ class driveTrain{
         vex::motor* BR;
         vex::inertial* gyro;
 
+        double MotorOffset;
+        double gearRatio;
+        double wheelCircumference;
+        double motorConversion;
+
         driveSide* Lside;
         driveSide* Rside;
 
@@ -28,7 +33,10 @@ class driveTrain{
             vex::motor& FrontRight,
             vex::motor& BackLeft,
             vex::motor& BackRight,
-            vex::inertial& Gyro
+            vex::inertial& Gyro,
+            double robotlength,
+            double gearratio,
+            double wheelDiameter
         );
 
         ~driveTrain();
@@ -38,6 +46,15 @@ class driveTrain{
         /*-----------------------Drivetrain Utility Functions------------------------*/
         /*---------------------------------------------------------------------------*/
 
+        /**
+         * @brief gets an average position of all motors
+        */
+        double getMotorAve();
+        
+        /**
+         * @brief resets Drivetrain encoders
+        */
+        void resetDrivePositions();
 
         /**
          * @brief stops all motors in the drivetrain
@@ -49,25 +66,33 @@ class driveTrain{
         */
         void setVelocities(double v);
 
+        double getHeading(int dir);
+
 
         /*---------------------------------------------------------------------------*/
         /*----------------------------Drivetrain Movements---------------------------*/
         /*---------------------------------------------------------------------------*/
-
-
-        /**
-         * @brief moves the drivetrain forward
-         * @param desiredPos the distance to move in inches
-         * @param v the speed to move at
-        */
-        void driveStraight(double desiredPos, double v);
 
         /**
          * @brief spins the drivetrain on its axis
          * @param theta the degree in degrees of the turn
          * @param v the speed to move at
         */
-        void PointTurn(double theta, double v);
+        void PointTurn(int dir, double theta, double v);
+
+        /**
+         * @brief spins the drivetrain left on its axis
+         * @param theta the degree in degrees of the turn
+         * @param v the speed to move at
+        */
+        void sidePivot(int dir, double theta, double v);
+
+        /**
+         * @brief moves the drivetrain forward
+         * @param desiredPos the distance to move in inches
+         * @param v the speed to move at
+        */
+        void driveStraight(int dir, double desiredPos, double v);
 
         /**
          * @brief moves the drivetrain in an arc
@@ -75,14 +100,7 @@ class driveTrain{
          * @param theta the degree in degrees of the turn
          * @param v the speed to move at
         */
-        void driveArc(double radius, double theta, double v);
-
-        /**
-         * @brief spins the drivetrain left on its axis
-         * @param theta the degree in degrees of the turn
-         * @param v the speed to move at
-        */
-        void sidePivot(double theta, double v);
+        void driveArc(int dir, double radius, double theta, double v);
 
 };
 

@@ -10,10 +10,17 @@
 
 driveSide::driveSide(
         vex::motor& Front,
-        vex::motor& Back
+        vex::motor& Back,
+        double gearratio,
+        double wheelDiameter
 ) {
     fMotor = &Front;
     bMotor = &Back;
+
+    gearRatio = gearratio;
+    wheelCircumference = wheelDiameter*M_PI;
+
+    motorConversion = gearRatio*(wheelCircumference)*(360);
 }
 
 driveSide::~driveSide(){}
@@ -21,6 +28,16 @@ driveSide::~driveSide(){}
 /*---------------------------------------------------------------------------*/
 /*-----------------------Drivetrain Utility Functions------------------------*/
 /*---------------------------------------------------------------------------*/
+
+
+double driveSide::getMotorAve(){
+    double ave = 0;
+    if(fMotor->position(degrees)>0){ave += fMotor->position(degrees);
+    } else {ave += (fMotor->position(degrees)*-1);}
+    if(bMotor->position(degrees)>0){ave += bMotor->position(degrees);
+    } else {ave += (bMotor->position(degrees)*-1);}
+    return ave/2;
+}
 
 void driveSide::stopDriveSide(vex::brakeType Brake){
     fMotor->stop(Brake);

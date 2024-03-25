@@ -13,7 +13,10 @@ driveTrain::driveTrain(
         vex::motor& FrontRight,
         vex::motor& BackLeft,
         vex::motor& BackRight,
-        vex::inertial& Gyro
+        vex::inertial& Gyro,
+        double robotlength,
+        double gearratio,
+        double wheelDiameter
 
 ) {
     FL = &FrontLeft;
@@ -22,8 +25,14 @@ driveTrain::driveTrain(
     BR = &BackRight;
     gyro = &Gyro;
 
-    Lside = new driveSide(*FL,*BL);
-    Rside = new driveSide(*FR,*BR);
+    MotorOffset = robotlength/2;
+    gearRatio = gearratio;
+    wheelCircumference = wheelDiameter*M_PI;
+
+    motorConversion = gearRatio*(wheelCircumference)*(360);
+
+    Lside = new driveSide(*FL,*BL, gearRatio, wheelDiameter);
+    Rside = new driveSide(*FR,*BR, gearRatio, wheelDiameter);
 
 }
 
@@ -33,6 +42,14 @@ driveTrain::~driveTrain(){}
 /*-----------------------Drivetrain Utility Functions------------------------*/
 /*---------------------------------------------------------------------------*/
 
+double driveTrain::getMotorAve(){
+    return (Lside->getMotorAve()+Rside->getMotorAve())/2;
+}
+
+void driveTrain::resetDrivePositions(){
+    FL->resetPosition();FR->resetPosition();
+    BL->resetPosition();BR->resetPosition();
+}
 
 void driveTrain::stopDriveTrain(vex::brakeType Brake){
     Lside->stopDriveSide(Brake);
@@ -44,24 +61,146 @@ void driveTrain::setVelocities(double v){
     Rside->setVelocities(v);
 }
 
+double driveTrain::getHeading(int dir){
+    switch (dir){
+    case 1: // looking left
+        return 360 - gyro->heading();
+        break;
+    case 2: // looking right
+        return gyro->heading();
+        break;
+    default:
+        return 0;
+        break;
+    }
+}
+
 
 /*---------------------------------------------------------------------------*/
 /*----------------------------Drivetrain Movements---------------------------*/
 /*---------------------------------------------------------------------------*/
 
+void driveTrain::PointTurn(int dir, double theta, double v){
+    setVelocities(v);resetDrivePositions();
+    bool complete = false; gyro->resetRotation();double errorOffset=4;
+    double ave; double head; double goal = theta*MotorOffset/motorConversion;
 
-void driveTrain::driveStraight(double desiredPos, double v){
-
+    while(!complete){
+        switch (dir) {
+        case 1: // Left turn
+            FL->spin(reverse);FR->spin(forward);
+            BL->spin(reverse);BR->spin(forward);
+            break;
+        case 2: // right turn
+            FL->spin(forward);FR->spin(reverse);
+            BL->spin(forward);BR->spin(reverse);
+            break;
+        default:
+            stopDriveTrain(hold);
+            complete=true;
+            break;
+        }
+        ave = getMotorAve(); head = getHeading(dir);
+        if ((theta-errorOffset < head < theta+errorOffset) ||
+            (goal-errorOffset < ave < goal+errorOffset)){
+                complete = true;
+        }
+    }
+    stopDriveTrain(hold);
 }
 
-void driveTrain::PointTurn(double theta, double v){
+void driveTrain::sidePivot(int dir, double theta, double v){
+    setVelocities(v);resetDrivePositions();
+    bool complete = false; Gyro.resetRotation();double errorOffset=4;
+    double ave; double head; double goal = theta*MotorOffset/motorConversion;
     
+    while (!complete){
+        switch (dir) {
+        case 1: // Left turn
+            FR->spin(forward);BR->spin(forward);
+            ave = Rside->getMotorAve(); 
+            break;
+        case 2: // right turn
+            FL->spin(forward);BL->spin(forward);
+            ave = Lside->getMotorAve();
+            break;
+        default:
+            stopDriveTrain(hold);
+            complete=true;
+            break;
+        }
+        head = getHeading(dir);
+        if ((theta-errorOffset < head < theta+errorOffset) ||
+            (goal-errorOffset < ave < goal+errorOffset)){
+                complete = true;
+        }
+    }
+    stopDriveTrain(hold);    
 }
 
-void driveTrain::driveArc(double radius, double theta, double v){
-    
+void driveTrain::driveStraight(int dir, double desiredPos, double v){
+    setVelocities(v);resetDrivePositions();
+    bool complete = false; double ave; double errorOffset = 4; 
+    double goal = desiredPos/motorConversion;
+
+    while(!complete){
+        switch (dir){
+        case 1: // forward movement
+            FL->spin(forward);FR->spin(forward);
+            BL->spin(forward);BR->spin(forward);
+            break;
+        case 2:
+            FL->spin(reverse);FR->spin(reverse);
+            BL->spin(reverse);BR->spin(reverse);
+            break;
+        default:
+            stopDriveTrain(hold);
+            complete=true;
+            break;
+        }
+        ave = getMotorAve();
+        if (goal-errorOffset < ave < goal+errorOffset){
+                complete = true;
+        }
+    }
+
+    stopDriveTrain(hold);
 }
 
-void driveTrain::sidePivot(double theta, double v){
+void driveTrain::driveArc(int dir, double radius, double theta, double v){
+    resetDrivePositions();
+    bool complete = false; double ave; double head; double errorOffset = 4; double goal = (theta*radius)/motorConversion; 
+    double leftspeed; double rightspeed; double leftRadius; double rightRadius;
     
+    switch(dir){
+        case 1:
+            leftRadius = radius-MotorOffset;
+            rightRadius = radius+MotorOffset;
+            break;
+        case 2:
+            leftRadius = radius-MotorOffset;
+            rightRadius = radius+MotorOffset;
+            break;
+        default:
+            leftRadius=1;
+            rightRadius=1;
+            break;
+    }
+
+    leftspeed = v*(leftRadius/radius);rightspeed = v*(rightRadius/radius);
+    Lside->setVelocities(leftspeed); Rside->setVelocities(rightspeed);
+    
+    while(!complete){
+        FL->spin(fwd);FR->spin(fwd);
+        BL->spin(fwd);BR->spin(fwd);
+        ave = ((Lside->getMotorAve()*radius/leftRadius)+ 
+               (Rside->getMotorAve()*radius/rightRadius))/2;
+        head = getHeading(dir);
+        
+        if ((theta-errorOffset < head < theta+errorOffset) ||
+            (goal-errorOffset < ave < goal+errorOffset)){
+                complete = true;
+        }
+    }
+    stopDriveTrain(hold);
 }

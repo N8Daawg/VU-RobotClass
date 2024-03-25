@@ -15,10 +15,16 @@ class driveSide{
         vex::motor* fMotor;
         vex::motor* bMotor;
 
+        double gearRatio;
+        double wheelCircumference;
+        double motorConversion;
+
     public:
         driveSide(
             vex::motor& Front,
-            vex::motor& Back
+            vex::motor& Back,
+            double gearratio,
+            double wheelDiameter
         );
 
         ~driveSide();
@@ -26,6 +32,11 @@ class driveSide{
         /*---------------------------------------------------------------------------*/
         /*-----------------------Drivetrain Utility Functions------------------------*/
         /*---------------------------------------------------------------------------*/
+
+        /**
+         * @brief gets an average position of all motors
+        */
+        double getMotorAve();
 
         /**
          * @brief stops all motors in the drivetrain
