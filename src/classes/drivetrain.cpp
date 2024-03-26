@@ -173,13 +173,13 @@ void driveTrain::driveArc(int dir, double radius, double theta, double v){
     double leftspeed; double rightspeed; double leftRadius; double rightRadius;
     
     switch(dir){
-        case 1:
+        case 1: // left
             leftRadius = radius-MotorOffset;
             rightRadius = radius+MotorOffset;
             break;
-        case 2:
-            leftRadius = radius-MotorOffset;
-            rightRadius = radius+MotorOffset;
+        case 2: // right
+            leftRadius = radius+MotorOffset;
+            rightRadius = radius-MotorOffset;
             break;
         default:
             leftRadius=1;
