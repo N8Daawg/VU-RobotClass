@@ -9,11 +9,11 @@
 #include "vex.h"
 
 driveTrain::driveTrain(
-        vex::motor& FrontLeft,
-        vex::motor& FrontRight,
-        vex::motor& BackLeft,
-        vex::motor& BackRight,
-        vex::inertial& Gyro,
+        vex::motor &FrontLeft,
+        vex::motor &FrontRight,
+        vex::motor &BackLeft,
+        vex::motor &BackRight,
+        vex::inertial &Gyro,
         double robotlength,
         double gearratio,
         double wheelDiameter
@@ -31,8 +31,8 @@ driveTrain::driveTrain(
 
     motorConversion = gearRatio*(wheelCircumference)*(360);
 
-    Lside = new driveSide(*FL,*BL, gearRatio, wheelDiameter);
-    Rside = new driveSide(*FR,*BR, gearRatio, wheelDiameter);
+    twoWheelSide Lside(*FL,*BL, gearRatio, wheelDiameter);
+    twoWheelSide Rside(*FR,*BR, gearRatio, wheelDiameter);
 
 }
 
@@ -41,6 +41,7 @@ driveTrain::~driveTrain(){}
 /*---------------------------------------------------------------------------*/
 /*-----------------------Drivetrain Utility Functions------------------------*/
 /*---------------------------------------------------------------------------*/
+
 
 double driveTrain::getMotorAve(){
     return (Lside->getMotorAve()+Rside->getMotorAve())/2;
@@ -79,6 +80,7 @@ double driveTrain::getHeading(int dir){
 /*---------------------------------------------------------------------------*/
 /*----------------------------Drivetrain Movements---------------------------*/
 /*---------------------------------------------------------------------------*/
+
 
 void driveTrain::PointTurn(int dir, double theta, double v){
     setVelocities(v);resetDrivePositions();
@@ -203,4 +205,18 @@ void driveTrain::driveArc(int dir, double radius, double theta, double v){
         }
     }
     stopDriveTrain(hold);
+}
+
+/*-------------------------------------------------------------------------------*/
+/*----------------------------Driver Control Movements---------------------------*/
+/*-------------------------------------------------------------------------------*/
+
+bool driveTrain::withinDeadzone(int x){
+    return ((x<deadzone) && (x> -deadzone));
+}
+
+int driveTrain::drive(int leftEW, int leftNS, int rightEW, int rightNS){
+    
+    
+    return 1;
 }

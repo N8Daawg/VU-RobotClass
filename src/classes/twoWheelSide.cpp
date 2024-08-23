@@ -8,9 +8,9 @@
 /*----------------------------------------------------------------------------*/
 #include "vex.h"
 
-driveSide::driveSide(
-        vex::motor& Front,
-        vex::motor& Back,
+twoWheelSide::twoWheelSide(
+        vex::motor &Front,
+        vex::motor &Back,
         double gearratio,
         double wheelDiameter
 ) {
@@ -23,14 +23,14 @@ driveSide::driveSide(
     motorConversion = gearRatio*(wheelCircumference)*(360);
 }
 
-driveSide::~driveSide(){}
+twoWheelSide::~twoWheelSide(){}
 
 /*---------------------------------------------------------------------------*/
 /*-----------------------Drivetrain Utility Functions------------------------*/
 /*---------------------------------------------------------------------------*/
 
 
-double driveSide::getMotorAve(){
+double twoWheelSide::getMotorAve(){
     double ave = 0;
     if(fMotor->position(degrees)>0){ave += fMotor->position(degrees);
     } else {ave += (fMotor->position(degrees)*-1);}
@@ -39,12 +39,12 @@ double driveSide::getMotorAve(){
     return ave/2;
 }
 
-void driveSide::stopDriveSide(vex::brakeType Brake){
+void twoWheelSide::stopDriveSide(vex::brakeType Brake){
     fMotor->stop(Brake);
     bMotor->stop(Brake);
 }
 
-void driveSide::setVelocities(double v){
+void twoWheelSide::setVelocities(double v){
     fMotor->setVelocity(v, pct);
     bMotor->setVelocity(v, pct);
 }
@@ -53,12 +53,12 @@ void driveSide::setVelocities(double v){
 /*----------------------------DriveSide Movements----------------------------*/
 /*---------------------------------------------------------------------------*/
 
-void driveSide::Spin(vex::directionType dir, double voltage, vex::voltageUnits units){
+void twoWheelSide::Spin(vex::directionType dir, double voltage, vex::voltageUnits units){
     fMotor->spin(dir, voltage, units);
     bMotor->spin(dir, voltage, units);
 }
 
-void driveSide::SpinTo(double rotation, double velocity){
+void twoWheelSide::SpinTo(double rotation, double velocity){
     fMotor->spinTo(rotation, degrees, velocity, velocityUnits::pct);
     bMotor->spinTo(rotation, degrees, velocity, velocityUnits::pct);
 }

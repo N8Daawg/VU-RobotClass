@@ -7,7 +7,6 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 #include "vex.h"
-#include "classes/drivetrain.hpp"
 
 using namespace vex;
 using signature = vision::signature;
@@ -27,26 +26,11 @@ inertial Gyro = inertial(PORT21);
 
 driveTrain drive(FrontLeft, FrontRight, BackLeft, BackRight, Gyro, 12, 1, 4);
 
-
-// Intake Setup
-motor Intake = motor(PORT2, ratio18_1, false);
-pneumatics pneumaticIntake = pneumatics(Brain.ThreeWirePort.G);
-
-// Cata Setup
-motor CataLeft = motor(PORT6, ratio36_1, false);
-motor CataRight = motor(PORT3, ratio36_1, true);
-
-// wall Setup
-pneumatics pneumaticWing = pneumatics(Brain.ThreeWirePort.H);
-
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  *
  * This should be called at the start of your int main function.
  */
 void vexcodeInit(void) {
-  Intake.setVelocity(100, velocityUnits::pct);
-  pneumaticIntake.close();
-  pneumaticWing.close();
   // Nothing to initialize
 }

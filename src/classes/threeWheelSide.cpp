@@ -3,26 +3,19 @@
 /*    Module:       Autons.h                                                  */
 /*    Author:       Nathan Beals                                              */
 /*    Created:      Sun March 17 2024                                         */
-/*    Description:  file for storing autonomous programs                      */
+/*    Description:  file for storing drivetrain class code                    */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
+#include "vex.h"
 
-#ifndef AUTONS_H
-#define AUTONS_H
+threeWheelSide::threeWheelSide(
+        vex::motor &Front,
+        vex::motor &Middle,
+        vex::motor &Back,
+        double gearratio,
+        double wheelDiameter
+):twoWheelSide(Front, Back, gearratio, wheelDiameter) {
+    mMotor = &Middle;
+}
 
-/**
- * @brief void containing autonomous test code
-*/
-void test();
-
-/**
- * @brief void containing autonomous match code
-*/
-void match();
-
-/**
- * @brief void containing autonomous skills code
-*/
-void skills();
-
-#endif
+threeWheelSide::~threeWheelSide(){}

@@ -9,7 +9,8 @@
 
 #ifndef DRIVETRAIN_HPP
 #define DRIVETRAIN_HPP
-#include "driveSide.hpp"
+#include "twoWheelSide.hpp"
+#include "threeWheelSide.hpp"
 
 class driveTrain{
     private:
@@ -23,17 +24,18 @@ class driveTrain{
         double gearRatio;
         double wheelCircumference;
         double motorConversion;
+        double deadzone = 0;
 
-        driveSide* Lside;
-        driveSide* Rside;
+        twoWheelSide* Lside;
+        twoWheelSide* Rside;
 
     public:
         driveTrain(
-            vex::motor& FrontLeft,
-            vex::motor& FrontRight,
-            vex::motor& BackLeft,
-            vex::motor& BackRight,
-            vex::inertial& Gyro,
+            vex::motor &FrontLeft,
+            vex::motor &FrontRight,
+            vex::motor &BackLeft,
+            vex::motor &BackRight,
+            vex::inertial &Gyro,
             double robotlength,
             double gearratio,
             double wheelDiameter
@@ -102,6 +104,24 @@ class driveTrain{
         */
         void driveArc(int dir, double radius, double theta, double v);
 
+        /*-------------------------------------------------------------------------------*/
+        /*----------------------------Driver Control Movements---------------------------*/
+        /*-------------------------------------------------------------------------------*/
+
+        /**
+         * @brief checks weather the joysticks are outside of the robot's deadzone
+         * @param x the input value of the controller that's being checked
+         */
+        bool withinDeadzone(int x);
+
+        /**
+         * @brief wrapper for controlling movement in driver control period
+         * @param leftEW value of the controller's left stick's x axis
+         * @param leftNS value of the controller's left stick's y axis
+         * @param rightEW value of the controller's right stick's x axis
+         * @param rightNS value of the controller's right stick's y axis
+         */
+        int drive(int leftEW, int leftNS, int rightEW, int rightNS);
 };
 
 #endif

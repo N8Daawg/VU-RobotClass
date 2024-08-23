@@ -11,11 +11,11 @@
 
 
 void setbrakes(brakeType Brake){
-    FL.stop(Brake);FR.stop(Brake);
-    BL.stop(Brake);BR.stop(Brake);
+    FrontLeft.stop(Brake);FrontRight.stop(Brake);
+    BackLeft.stop(Brake);BackRight.stop(Brake);
 }
 
 void setVelocities(double v){
-    FL.setVelocity(v, velocityUnits::pct);FR.setVelocity(v, velocityUnits::pct);
-    BL.setVelocity(v, velocityUnits::pct);BR.setVelocity(v, velocityUnits::pct);
+    FrontLeft.setVelocity(v, velocityUnits::pct);FrontRight.setVelocity(v, velocityUnits::pct);
+    BackLeft.setVelocity(v, velocityUnits::pct);BackRight.setVelocity(v, velocityUnits::pct);
 }

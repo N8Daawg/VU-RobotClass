@@ -15,12 +15,10 @@
 #include "v5.h"
 #include "v5_vcs.h"
 
+#include "classes/drivetrain.hpp"
 #include "robot-config.h"
 #include "Autons.h"
-#include "AutonUtil/positions.hpp"
-#include "AutonUtil/util.hpp"
-#include "classes/driveSide.hpp"
-#include "classes/drivetrain.hpp"
+
 
 #define waitUntil(condition)                                                   \
   do {                                                                         \

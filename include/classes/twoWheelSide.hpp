@@ -7,10 +7,10 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#ifndef DRIVESIDE_HPP
-#define DRIVESIDE_HPP
+#ifndef TWOWHEELSIDE_HPP
+#define TWOWHEELSIDE_HPP
 
-class driveSide{
+class twoWheelSide{
     private:
         vex::motor* fMotor;
         vex::motor* bMotor;
@@ -20,14 +20,14 @@ class driveSide{
         double motorConversion;
 
     public:
-        driveSide(
-            vex::motor& Front,
-            vex::motor& Back,
+        twoWheelSide(
+            vex::motor &Front,
+            vex::motor &Back,
             double gearratio,
             double wheelDiameter
         );
 
-        ~driveSide();
+        ~twoWheelSide();
 
         /*---------------------------------------------------------------------------*/
         /*-----------------------Drivetrain Utility Functions------------------------*/
