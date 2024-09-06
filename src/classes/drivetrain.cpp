@@ -216,7 +216,16 @@ bool driveTrain::withinDeadzone(int x){
 }
 
 int driveTrain::drive(int leftEW, int leftNS, int rightEW, int rightNS){
-    
-    
+    if((leftEW==0)  && (leftNS==0) && 
+       (rightEW==0) && (rightNS==0))
+    { //if all joystick values are exactly 0
+
+    } else if(withinDeadzone(leftEW)  && withinDeadzone(leftNS) && 
+       withinDeadzone(rightEW) && withinDeadzone(rightNS))
+    { //if all joystick values are within the deadzone
+
+    } else{ //any joystick is telling the robot to move
+
+    }
     return 1;
 }
