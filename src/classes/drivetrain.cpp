@@ -215,17 +215,19 @@ bool driveTrain::withinDeadzone(int x){
     return ((x<deadzone) && (x> -deadzone));
 }
 
-int driveTrain::drive(int leftEW, int leftNS, int rightEW, int rightNS){
-    if((leftEW==0)  && (leftNS==0) && 
-       (rightEW==0) && (rightNS==0))
-    { //if all joystick values are exactly 0
-
-    } else if(withinDeadzone(leftEW)  && withinDeadzone(leftNS) && 
-       withinDeadzone(rightEW) && withinDeadzone(rightNS))
+int driveTrain::drive(double leftNS, double leftEW, double rightNS, double rightEW){
+    if(withinDeadzone(leftNS)  && withinDeadzone(leftEW) && 
+       withinDeadzone(rightNS) && withinDeadzone(rightEW))
     { //if all joystick values are within the deadzone
 
-    } else{ //any joystick is telling the robot to move
+        double leftPower = leftNS + leftEW;
+        double rightPower = rightNS - rightEW;
+        
+        Lside->Spin(fwd, leftPower, velocityUnits::pct);
+        Rside->Spin(fwd, rightPower, velocityUnits::pct);
 
+    } else{ //no joystick is telling the robot to move
+        stopDriveTrain(hold);
     }
     return 1;
 }

@@ -57,6 +57,9 @@ class twoWheelSide{
          */
         void Spin(vex::directionType dir, double velocity, vex::velocityUnits units);
 
+        /**
+         * @brief moves drivetrain forward to a certain point
+         */
         void SpinTo(double rotation, double velocity);
 };
 

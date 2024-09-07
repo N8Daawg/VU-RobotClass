@@ -37,6 +37,7 @@ using namespace vex;
 competition Competition;
 
 // define your global instances of motors and other devices here
+controller Controller;
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -84,10 +85,21 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
+
+  double LNS; double LEW;
+  double RNS; double REW;
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
+
+    LNS = Controller.Axis4.position();
+    LEW = Controller.Axis3.position();
+    RNS = Controller.Axis2.position();;
+    REW = Controller.Axis1.position();
+
+    drive.drive(LNS,LEW,RNS,REW);
+
 
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to

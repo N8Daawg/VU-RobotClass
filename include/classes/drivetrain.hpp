@@ -121,7 +121,7 @@ class driveTrain{
          * @param rightEW value of the controller's right stick's x axis
          * @param rightNS value of the controller's right stick's y axis
          */
-        int drive(int leftEW, int leftNS, int rightEW, int rightNS);
+        int drive(double leftNS, double leftEW, double rightNS, double rightEW);
 };
 
 #endif
