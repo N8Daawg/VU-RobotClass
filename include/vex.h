@@ -16,6 +16,9 @@
 #include "v5_vcs.h"
 
 #include "classes/drivetrain.hpp"
+
+#include "classes/Vectors/CartesianVectors.hpp"
+
 #include "robot-config.h"
 #include "Autons.h"
 
