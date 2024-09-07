@@ -53,9 +53,9 @@ void twoWheelSide::setVelocities(double v){
 /*----------------------------DriveSide Movements----------------------------*/
 /*---------------------------------------------------------------------------*/
 
-void twoWheelSide::Spin(vex::directionType dir, double voltage, vex::voltageUnits units){
-    fMotor->spin(dir, voltage, units);
-    bMotor->spin(dir, voltage, units);
+void twoWheelSide::Spin(vex::directionType dir, double velocity, vex::velocityUnits units){
+    fMotor->spin(dir, velocity, units);
+    bMotor->spin(dir, velocity, units);
 }
 
 void twoWheelSide::SpinTo(double rotation, double velocity){

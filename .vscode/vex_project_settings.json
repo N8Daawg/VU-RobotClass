@@ -1,16 +1,16 @@
 {
 	"extension": {
-		"version": "0.5.0",
+		"version": "0.6.0",
 		"json": 2
 	},
 	"project": {
 		"name": "VU-RobotClassProject",
 		"description": "project for turning my voids library to a functioning robot class code\n",
-		"creationDate": "2/28/2024, 12:47:16 PM",
+		"creationDate": "Sat, 07 Sep 2024 16:01:03 GMT",
 		"platform": "V5",
 		"language": "cpp",
 		"slot": 1,
-		"sdkVersion": "V5_20220726_10_00_00",
+		"sdkVersion": "V5_20240223_11_00_00",
 		"cpp": {
 			"includePath": [],
 			"printf_float": true

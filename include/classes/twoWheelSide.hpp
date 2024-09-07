@@ -52,7 +52,10 @@ class twoWheelSide{
         /*----------------------------DriveSide Movements----------------------------*/
         /*---------------------------------------------------------------------------*/
 
-        void Spin(vex::directionType dir, double voltage, vex::voltageUnits units);
+        /**
+         * @brief Spins motor in a direction at a specified velocity
+         */
+        void Spin(vex::directionType dir, double velocity, vex::velocityUnits units);
 
         void SpinTo(double rotation, double velocity);
 };
