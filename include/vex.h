@@ -16,6 +16,7 @@
 #include "v5_vcs.h"
 
 #include "classes/drivetrain.hpp"
+#include "classes/drivetrains/standardDrive.hpp"
 
 #include "classes/Vectors/CartesianVectors.hpp"
 

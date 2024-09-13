@@ -9,7 +9,7 @@
 #include "vex.h"
 
 void test(){
-    drive.stopDriveTrain(hold);
+    
 }
 
 void match(){

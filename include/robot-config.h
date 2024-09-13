@@ -19,7 +19,7 @@ extern motor FrontRight;
 extern motor BackRight;
 extern inertial Gyro;
 
-extern driveTrain drive;
+extern standardDrive drive;
 
 
 /**

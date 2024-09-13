@@ -24,7 +24,7 @@ motor FrontRight = motor(PORT15, ratio18_1, false);
 motor BackRight = motor(PORT17, ratio18_1, false);
 inertial Gyro = inertial(PORT21);
 
-driveTrain drive(FrontLeft, FrontRight, BackLeft, BackRight, Gyro, 12, 1, 4);
+standardDrive drive(FrontLeft, FrontRight, BackLeft, BackRight, Gyro, 12, 1, 4);
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
