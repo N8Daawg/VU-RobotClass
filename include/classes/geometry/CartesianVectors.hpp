@@ -12,7 +12,7 @@
 
 class CartesianVector
 {
-#include "classes/Vectors/PolarVectors.hpp"
+#include "classes/geometry/PolarVectors.hpp"
 private:
     double x;
     double y;

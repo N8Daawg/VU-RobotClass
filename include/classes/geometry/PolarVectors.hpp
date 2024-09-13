@@ -12,7 +12,7 @@
 
 class PolarVector
 {
-#include "classes/Vectors/CartesianVectors.hpp"
+#include "classes/geometry/CartesianVectors.hpp"
 private:
     double M;
     double theta;

@@ -18,7 +18,7 @@
 #include "classes/drivetrain.hpp"
 #include "classes/drivetrains/standardDrive.hpp"
 
-#include "classes/Vectors/CartesianVectors.hpp"
+#include "classes/geometry/CartesianVectors.hpp"
 
 #include "robot-config.h"
 #include "Autons.h"
