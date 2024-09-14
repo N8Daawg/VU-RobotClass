@@ -1,9 +1,9 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       Autons.h                                                  */
+/*    Module:       twoWheelSide.cpp                                          */
 /*    Author:       Nathan Beals                                              */
 /*    Created:      Sun March 17 2024                                         */
-/*    Description:  file for storing drivetrain class code                    */
+/*    Description:  file for storing WheelSide class code                     */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 #include "vex.h"
