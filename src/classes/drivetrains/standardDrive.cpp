@@ -18,10 +18,25 @@ standardDrive::standardDrive(
         double gearratio,
         double wheelDiameter
 ):driveTrain(Gyro, robotlength, gearratio, wheelDiameter) {
-    twoWheelSide Lside(*FL,*BL, gearRatio, wheelDiameter);
-    twoWheelSide Rside(*FR,*BR, gearRatio, wheelDiameter);
+    twoWheelSide Lside(*FrontLeft,*BackLeft, gearRatio, wheelDiameter);
+    twoWheelSide Rside(*FrontRight,*BackRight, gearRatio, wheelDiameter);
 }
 
+standardDrive::standardDrive(
+        vex::motor &FrontLeft,
+        vex::motor &FrontRight,
+        vex::motor &MiddleLeft,
+        vex::motor &MiddleRight,
+        vex::motor &BackLeft,
+        vex::motor &BackRight,
+        vex::inertial &Gyro,
+        double robotlength,
+        double gearratio,
+        double wheelDiameter
+):driveTrain(Gyro, robotlength, gearratio, wheelDiameter) {
+    threeWheelSide Lside(*FrontLeft, *MiddleLeft, *BackLeft, gearRatio, wheelDiameter);
+    threeWheelSide Rside(*FrontRight, *MiddleRight, *BackRight, gearRatio, wheelDiameter);
+}
 standardDrive::~standardDrive(){}
 
 /*---------------------------------------------------------------------------*/

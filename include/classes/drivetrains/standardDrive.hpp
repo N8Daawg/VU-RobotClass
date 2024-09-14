@@ -37,6 +37,19 @@ class standardDrive : public driveTrain{
             double wheelDiameter
         );
 
+        standardDrive(
+            vex::motor &FrontLeft,
+            vex::motor &FrontRight,
+            vex::motor &MiddleLeft,
+            vex::motor &MiddleRight,
+            vex::motor &BackLeft,
+            vex::motor &BackRight,
+            vex::inertial &Gyro,
+            double robotlength,
+            double gearratio,
+            double wheelDiameter
+        );
+
         ~standardDrive();
 
         /*---------------------------------------------------------------------------*/
