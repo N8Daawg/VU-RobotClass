@@ -6,13 +6,13 @@
 /*    Description:  file for storing drivetrain class code                    */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-
 #ifndef DRIVETRAIN_HPP
 #define DRIVETRAIN_HPP
-#include "wheelSideClasses/twoWheelSide.hpp"
-#include "wheelSideClasses/threeWheelSide.hpp"
+#include "twoWheelSide.hpp"
+#include "threeWheelSide.hpp"
 
-
+#include "classes/wheelSides/twoWheelSide.hpp"
+#include "classes/wheelSides/threeWheelSide.hpp"
 class driveTrain{
     private:
         vex::inertial* gyro;
@@ -22,6 +22,9 @@ class driveTrain{
         double wheelCircumference;
         double motorConversion;
         double deadzone = 0;
+
+        twoWheelSide* Lside;
+        twoWheelSide* Rside;
 
     public:
         driveTrain(
