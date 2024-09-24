@@ -12,11 +12,20 @@
 #include "classes/wheelSides/threeWheelSide.hpp"
 #include "classes/drivetrain.hpp"
 driveTrain::driveTrain(
+        vex::motor &FrontLeft,
+        vex::motor &FrontRight,
+        vex::motor &BackLeft,
+        vex::motor &BackRight,
         vex::inertial &Gyro,
         double robotlength,
         double gearratio,
         double wheelDiameter
+
 ) {
+    FL = &FrontLeft;
+    FR = &FrontRight;
+    BL = &BackLeft;
+    BR = &BackRight;
     gyro = &Gyro;
 
     MotorOffset = robotlength/2;
@@ -25,13 +34,10 @@ driveTrain::driveTrain(
 
     motorConversion = gearRatio*(wheelCircumference)*(360);
 
-<<<<<<< HEAD
-=======
     
     Lside = twoWheelSide(FrontLeft, BackLeft, gearRatio, wheelDiameter);
     Rside = twoWheelSide(FrontRight, BackRight, gearRatio, wheelDiameter);
     
->>>>>>> e0b6c7b (reverted back to prior version due to build issues)
 }
 
 driveTrain::~driveTrain(){}
@@ -40,8 +46,6 @@ driveTrain::~driveTrain(){}
 /*-----------------------Drivetrain Utility Functions------------------------*/
 /*---------------------------------------------------------------------------*/
 
-<<<<<<< HEAD
-=======
 
 double driveTrain::getMotorAve(){
     return (Lside.getMotorAve()+Rside.getMotorAve())/2;
@@ -62,7 +66,6 @@ void driveTrain::setVelocities(double v){
     Rside.setVelocities(v);
 }
 
->>>>>>> e0b6c7b (reverted back to prior version due to build issues)
 double driveTrain::getHeading(int dir){
     switch (dir){
     case 1: // looking left
@@ -77,8 +80,6 @@ double driveTrain::getHeading(int dir){
     }
 }
 
-<<<<<<< HEAD
-=======
 
 /*---------------------------------------------------------------------------*/
 /*----------------------------Drivetrain Movements---------------------------*/
@@ -211,16 +212,12 @@ void driveTrain::driveArc(int dir, double radius, double theta, double v){
 }
 */
 
->>>>>>> e0b6c7b (reverted back to prior version due to build issues)
 /*-------------------------------------------------------------------------------*/
 /*----------------------------Driver Control Movements---------------------------*/
 /*-------------------------------------------------------------------------------*/
 
-bool driveTrain::withinDeadzone(int x)
-{
+bool driveTrain::withinDeadzone(int x){
     return ((x<deadzone) && (x> -deadzone));
-<<<<<<< HEAD
-=======
 }
 
 int driveTrain::drive(double leftNS, double leftEW, double rightNS, double rightEW){
@@ -238,5 +235,4 @@ int driveTrain::drive(double leftNS, double leftEW, double rightNS, double right
         stopDriveTrain(hold);
     }
     return 1;
->>>>>>> e0b6c7b (reverted back to prior version due to build issues)
 }

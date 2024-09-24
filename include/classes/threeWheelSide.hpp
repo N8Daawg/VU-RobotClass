@@ -24,7 +24,7 @@ class threeWheelSide{
             vex::motor &Middle,
             vex::motor &Back,
             double gearratio,
-            double wheelDiameter
+            double wheeldiameter
         );
 
         ~threeWheelSide();

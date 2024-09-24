@@ -13,13 +13,13 @@ threeWheelSide::threeWheelSide(
         vex::motor &Middle,
         vex::motor &Back,
         double gearratio,
-        double wheelDiameter
+        double wheeldiameter
 ) {
     fMotor = &Front;
     mMotor = &Middle;
     bMotor = &Back;
     gearRatio = gearratio;
-    wheelDiameter = wheelDiameter;
+    wheelDiameter = wheeldiameter;
 }
 
 threeWheelSide::~threeWheelSide(){}

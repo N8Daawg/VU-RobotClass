@@ -8,13 +8,16 @@
 /*----------------------------------------------------------------------------*/
 #ifndef DRIVETRAIN_HPP
 #define DRIVETRAIN_HPP
-#include "twoWheelSide.hpp"
-#include "threeWheelSide.hpp"
 
-#include "classes/wheelSides/twoWheelSide.hpp"
-#include "classes/wheelSides/threeWheelSide.hpp"
+#include "classes/twoWheelSide.hpp"
+#include "classes/threeWheelSide.hpp"
 class driveTrain{
     private:
+        vex::motor* FR;
+        vex::motor* BR;
+        vex::motor* FL;
+        vex::motor* BL;
+
         vex::inertial* gyro;
 
         double MotorOffset;
@@ -23,11 +26,15 @@ class driveTrain{
         double motorConversion;
         double deadzone = 0;
 
-        twoWheelSide* Lside;
-        twoWheelSide* Rside;
+        twoWheelSide Lside;
+        twoWheelSide Rside;
 
     public:
         driveTrain(
+            vex::motor &FrontLeft,
+            vex::motor &FrontRight,
+            vex::motor &BackLeft,
+            vex::motor &BackRight,
             vex::inertial &Gyro,
             double robotlength,
             double gearratio,
@@ -43,22 +50,22 @@ class driveTrain{
         /**
          * @brief gets an average position of all motors
         */
-        virtual double getMotorAve() = 0;
+        double getMotorAve();
         
         /**
          * @brief resets Drivetrain encoders
         */
-        virtual void resetDrivePositions() = 0;
+        void resetDrivePositions();
 
         /**
          * @brief stops all motors in the drivetrain
         */
-        virtual void stopDriveTrain(vex::brakeType Brake) = 0;
+        void stopDriveTrain(vex::brakeType Brake);
 
         /**
          * @brief sets velocities of all motors in drivetrain
         */
-        virtual void setVelocities(double v) = 0;
+        void setVelocities(double v);
 
         double getHeading(int dir);
 
@@ -71,6 +78,8 @@ class driveTrain{
          * @param x the input value of the controller that's being checked
          */
         bool withinDeadzone(int x);
+
+        int drive(double leftNS, double leftEW, double rightNS, double rightEW);
 
 };
 
