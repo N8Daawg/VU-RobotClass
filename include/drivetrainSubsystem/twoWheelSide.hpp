@@ -10,10 +10,10 @@
 #ifndef TWOWHEELSIDE_HPP
 #define TWOWHEELSIDE_HPP
 
-class twoWheelSide{
+class twoWheelSide: public wheelSide{
     private:
-        vex::motor* fMotor;
-        vex::motor* bMotor;
+        vex::motor* front;
+        vex::motor* back;
 
         double gearRatio;
         double wheelCircumference;
@@ -21,12 +21,11 @@ class twoWheelSide{
 
     public:
         twoWheelSide(
-            vex::motor &Front,
-            vex::motor &Back,
+            vex::motor* Frontm,
+            vex::motor* Backm,
             double gearratio,
             double wheelDiameter
         );
-        twoWheelSide();
 
         ~twoWheelSide();
 
@@ -37,31 +36,32 @@ class twoWheelSide{
         /**
          * @brief gets an average position of all motors
         */
-        double getMotorAve();
+        virtual double getMotorAveWrap();
 
         /**
          * @brief stops all motors in the drivetrain
         */
-        void stopDriveSide(vex::brakeType Brake);
+        virtual void stopDriveSideWrap(brakeType Brake);
 
         /**
          * @brief sets velocities of all motors in drivetrain
         */
-        void setVelocities(double v);
+        virtual void setVelocitiesWrap(double velocity);
 
         /*---------------------------------------------------------------------------*/
         /*----------------------------DriveSide Movements----------------------------*/
         /*---------------------------------------------------------------------------*/
 
         /**
-         * @brief Spins motor in a direction at a specified velocity
-         */
-        void Spin(vex::directionType dir, double velocity, vex::velocityUnits units);
-
-        /**
          * @brief moves drivetrain forward to a certain point
          */
-        void SpinTo(double rotation, double velocity);
+        virtual void spinToWrap(double rotation, double velocity);
+
+        /**
+         * @brief Spins motor in a direction at a specified velocity
+         */
+        virtual void spinWrap(directionType dir, double velocity, velocityUnits units);
+
 };
 
 #endif

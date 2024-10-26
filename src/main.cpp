@@ -39,6 +39,14 @@ competition Competition;
 // define your global instances of motors and other devices here
 controller Controller;
 
+AllianceColor matchColor;
+
+double robotLength = 12;
+double gearRatio = 1;
+double wheelDiameter = 4;
+
+Robot robot(&FrontLeft, &FrontRight, &BackLeft, &BackRight, &Gyro, robotLength, gearRatio, wheelDiameter);
+
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -49,9 +57,51 @@ controller Controller;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
+void setprogram(void) {
+  
+  bool pressed = false;
+
+  
+  Controller.Screen.newLine();
+  Controller.Screen.print("color: Red(a) Blue(b)      ");
+
+  while(!pressed){
+    if(Controller.ButtonA.pressing()){
+      matchColor = RedAlliance;
+      pressed=true;
+    }
+    if(Controller.ButtonB.pressing()){
+      matchColor = BlueAlliance;
+      pressed=true;
+    }
+  }
+
+  Controller.Screen.clearLine();
+
+  switch (matchColor) {
+  case RedAlliance:
+    Brain.Screen.print("Red Alliance Selected");
+    break;
+  
+  case BlueAlliance:
+    Brain.Screen.print("Blue Alliance Selected");
+    break;
+
+  default:
+    setprogram();
+    break;
+  }
+  
+}
+
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+  setprogram();
+
+  if(Brain.SDcard.isInserted()){
+    Brain.Screen.drawImageFromFile("Logo2.png",0,0);
+  }
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
@@ -93,12 +143,13 @@ void usercontrol(void) {
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
 
+    
     LNS = Controller.Axis4.position();
     LEW = Controller.Axis3.position();
-    RNS = Controller.Axis2.position();;
+    RNS = Controller.Axis2.position();
     REW = Controller.Axis1.position();
-
-    drive.drive(LNS,LEW,RNS,REW);
+    
+    robot.drive(LNS,LEW,RNS,REW);
 
 
     // ........................................................................

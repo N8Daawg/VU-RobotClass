@@ -19,9 +19,6 @@ extern motor FrontRight;
 extern motor BackRight;
 extern inertial Gyro;
 
-extern driveTrain drive;
-
-
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  *

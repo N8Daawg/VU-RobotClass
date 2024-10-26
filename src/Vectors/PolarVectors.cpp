@@ -1,16 +1,19 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       PolarVectors.hpp                                          */
+/*    Module:       PolarVectors.cpp                                          */
 /*    Author:       Nathan Beals                                              */
 /*    Created:      Sat Sep 7 2024                                            */
 /*    Description:  file for storing Polar Vector class code                  */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-#include "PolarVectors.hpp"
+#include "Vectors/PolarVectors.hpp"
+#include "Vectors/CartesianVectors.hpp"
 #include "math.h"
 
 PolarVector::PolarVector(double m, double theta)
 {
+    M=m;
+    Theta=theta;
 }
 
 PolarVector::~PolarVector()
@@ -24,22 +27,23 @@ double PolarVector::getMagnetude()
 
 double PolarVector::getAngle()
 {
-    return theta;
+    return Theta;
 }
 
 /*---------------------------------------------------------------------------*/
 /*------------------------------Vector Conversion----------------------------*/
 /*---------------------------------------------------------------------------*/
 
+/*
 CartesianVector PolarVector::toCartesian(PolarVector v)
 {
     return CartesianVector(M * cos(theta), M * sin(theta), 0);
 }
-
+*/
 /*---------------------------------------------------------------------------*/
 /*------------------------------Vector Operations----------------------------*/
 /*---------------------------------------------------------------------------*/
-
+/*
 PolarVector PolarVector::add(PolarVector v1, PolarVector v2)
 {
     return PolarVector();
@@ -59,3 +63,4 @@ PolarVector PolarVector::dotProduct(PolarVector v1, PolarVector v2)
 {
     return PolarVector();
 }
+*/

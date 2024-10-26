@@ -7,26 +7,21 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 #include "vex.h"
+using namespace vex;
 
-#include "classes/wheelSides/twoWheelSide.hpp"
-#include "classes/wheelSides/threeWheelSide.hpp"
-#include "classes/drivetrain.hpp"
+driveTrain::driveTrain(){}
+
 driveTrain::driveTrain(
-        vex::motor &FrontLeft,
-        vex::motor &FrontRight,
-        vex::motor &BackLeft,
-        vex::motor &BackRight,
-        vex::inertial &Gyro,
+        vex::motor* FrontLeft,
+        vex::motor* FrontRight,
+        vex::motor* BackLeft,
+        vex::motor* BackRight,
+        vex::inertial* Gyro,
         double robotlength,
         double gearratio,
         double wheelDiameter
-
 ) {
-    FL = &FrontLeft;
-    FR = &FrontRight;
-    BL = &BackLeft;
-    BR = &BackRight;
-    gyro = &Gyro;
+    gyro = Gyro;
 
     MotorOffset = robotlength/2;
     gearRatio = gearratio;
@@ -34,10 +29,8 @@ driveTrain::driveTrain(
 
     motorConversion = gearRatio*(wheelCircumference)*(360);
 
-    
-    Lside = twoWheelSide(FrontLeft, BackLeft, gearRatio, wheelDiameter);
-    Rside = twoWheelSide(FrontRight, BackRight, gearRatio, wheelDiameter);
-    
+    leftSide = new twoWheelSide(FrontLeft, BackLeft, gearratio, wheelDiameter);
+    rightSide = new twoWheelSide(FrontRight, BackRight, gearratio, wheelDiameter);    
 }
 
 driveTrain::~driveTrain(){}
@@ -48,22 +41,23 @@ driveTrain::~driveTrain(){}
 
 
 double driveTrain::getMotorAve(){
-    return (Lside.getMotorAve()+Rside.getMotorAve())/2;
+    //return (Lside.getMotorAve()+Rside.getMotorAve())/2;
+    return 0;
 }
 
 void driveTrain::resetDrivePositions(){
-    FL->resetPosition();FR->resetPosition();
-    BL->resetPosition();BR->resetPosition();
+    //FL->resetPosition();FR->resetPosition();
+    //BL->resetPosition();BR->resetPosition();
 }
 
-void driveTrain::stopDriveTrain(vex::brakeType Brake){
-    Lside.stopDriveSide(Brake);
-    Rside.stopDriveSide(Brake);
+void driveTrain::stopDriveTrain(brakeType Brake){
+    leftSide->stopDriveSide(Brake);
+    rightSide->stopDriveSide(Brake);
 }
 
-void driveTrain::setVelocities(double v){
-    Lside.setVelocities(v);
-    Rside.setVelocities(v);
+void driveTrain::setVelocities(double velocity){
+    leftSide->setVelocities(velocity);
+    rightSide->setVelocities(velocity);
 }
 
 double driveTrain::getHeading(int dir){
@@ -223,16 +217,16 @@ bool driveTrain::withinDeadzone(int x){
 int driveTrain::drive(double leftNS, double leftEW, double rightNS, double rightEW){
     if(withinDeadzone(leftNS)  && withinDeadzone(leftEW) && 
        withinDeadzone(rightNS) && withinDeadzone(rightEW))
-    { //if all joystick values are within the deadzone
+    { //no joystick is telling the robot to move
+        stopDriveTrain(hold);
 
+    } else{ //if all joystick values are within the deadzone
         double leftPower = leftNS + leftEW;
         double rightPower = rightNS - rightEW;
         
-        Lside.Spin(fwd, leftPower, velocityUnits::pct);
-        Rside.Spin(fwd, rightPower, velocityUnits::pct);
+        leftSide->spin(fwd, leftPower, velocityUnits::pct);
+        leftSide->spin(fwd, leftPower, velocityUnits::pct);
 
-    } else{ //no joystick is telling the robot to move
-        stopDriveTrain(hold);
     }
     return 1;
 }

@@ -6,7 +6,7 @@
 /*    Description:  file for storing Cartesian Vector class code              */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-#include "CartesianVectors.hpp"
+#include "Vectors/CartesianVectors.hpp"
 #include "math.h"
 
 CartesianVector::CartesianVector(
@@ -48,10 +48,12 @@ double CartesianVector::getZ()
 /*------------------------------Vector Conversion----------------------------*/
 /*---------------------------------------------------------------------------*/
 
+/*
 PolarVector CartesianVector::toPolar(CartesianVector v)
 {
     return PolarVector(sqrt(pow(x, 2) + pow(y, 2)), atan2(y, x));
 }
+*/
 
 /*---------------------------------------------------------------------------*/
 /*------------------------------Vector Operations----------------------------*/

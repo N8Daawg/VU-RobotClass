@@ -1,48 +1,53 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       PolarVectors.hpp                                          */
+/*    Module:       CartesianVectors.hpp                                      */
 /*    Author:       Nathan Beals                                              */
 /*    Created:      Sat Sep 7 2024                                            */
-/*    Description:  file for storing Polar Vector class code                  */
+/*    Description:  file for storing Cartesian Vector class code              */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#ifndef POLARVECTORS_HPP
-#define POLARVECTORS_HPP
+#ifndef CARTESIANVECTORS_HPP
+#define CARTESIANVECTORS_HPP
 
-class PolarVector
+class CartesianVector
 {
-#include "classes/Vectors/CartesianVectors.hpp"
+#include "Vectors/PolarVectors.hpp"
 private:
-    double M;
-    double theta;
+    double x;
+    double y;
+    double z;
 
 public:
-    PolarVector(double m, double theta);
+    CartesianVector(double X, double Y);
 
-    ~PolarVector();
+    CartesianVector(double X, double Y, double Z);
 
-    double getMagnetude();
+    ~CartesianVector();
 
-    double getAngle();
+    double getX();
+
+    double getY();
+
+    double getZ();
 
     /*---------------------------------------------------------------------------*/
     /*------------------------------Vector Conversion----------------------------*/
     /*---------------------------------------------------------------------------*/
 
-    CartesianVector toCartesian(PolarVector v);
+    //PolarVector toPolar(CartesianVector v);
 
     /*---------------------------------------------------------------------------*/
     /*------------------------------Vector Operations----------------------------*/
     /*---------------------------------------------------------------------------*/
 
-    PolarVector add(PolarVector v1, PolarVector v2);
+    CartesianVector add(CartesianVector v1, CartesianVector v2);
 
-    PolarVector subtract(PolarVector v1, PolarVector v2);
+    CartesianVector subtract(CartesianVector v1, CartesianVector v2);
 
-    PolarVector crossProduct(PolarVector v1, PolarVector v2);
+    CartesianVector crossProduct(CartesianVector v1, CartesianVector v2);
 
-    PolarVector dotProduct(PolarVector v1, PolarVector v2);
+    double dotProduct(CartesianVector v1, CartesianVector v2);
 };
 
 #endif

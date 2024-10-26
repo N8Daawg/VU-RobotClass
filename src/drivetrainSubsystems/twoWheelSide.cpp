@@ -7,30 +7,21 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 #include "vex.h"
+using namespace vex;
 
 twoWheelSide::twoWheelSide(
-        vex::motor &Front,
-        vex::motor &Back,
+        vex::motor* frontm,
+        vex::motor* backm,
         double gearratio,
         double wheelDiameter
-) {
-    fMotor = &Front;
-    bMotor = &Back;
+):wheelSide(2) {
+    front = frontm;
+    back = backm;
 
     gearRatio = gearratio;
     wheelCircumference = wheelDiameter*M_PI;
 
     motorConversion = gearRatio*(wheelCircumference)*(360);
-}
-
-twoWheelSide::twoWheelSide(){
-    fMotor = nullptr;
-    bMotor = nullptr;
-
-    gearRatio = 0;
-    wheelCircumference = 0;
-
-    motorConversion = 0;   
 }
 
 twoWheelSide::~twoWheelSide(){}
@@ -40,35 +31,35 @@ twoWheelSide::~twoWheelSide(){}
 /*---------------------------------------------------------------------------*/
 
 
-double twoWheelSide::getMotorAve(){
+double twoWheelSide::getMotorAveWrap(){
     double ave = 0;
-    if(fMotor->position(degrees)>0){ave += fMotor->position(degrees);
-    } else {ave += (fMotor->position(degrees)*-1);}
-    if(bMotor->position(degrees)>0){ave += bMotor->position(degrees);
-    } else {ave += (bMotor->position(degrees)*-1);}
-    return ave/2;
+    if(front->position(degrees)>0){ave += front->position(degrees);
+    } else {ave -= front->position(degrees);}
+    if(back->position(degrees)>0){ave += back->position(degrees);
+    } else {ave -= back->position(degrees);}
+    return ave/getNumOfWheels();
 }
 
-void twoWheelSide::stopDriveSide(vex::brakeType Brake){
-    fMotor->stop(Brake);
-    bMotor->stop(Brake);
+void twoWheelSide::stopDriveSideWrap(brakeType Brake){
+    front->stop(brake);
+    back->stop(brake);
 }
 
-void twoWheelSide::setVelocities(double v){
-    fMotor->setVelocity(v, pct);
-    bMotor->setVelocity(v, pct);
+void twoWheelSide::setVelocitiesWrap(double velocity){
+    front->setVelocity(velocity, pct);
+    back->setVelocity(velocity, pct);
 }
 
 /*---------------------------------------------------------------------------*/
 /*----------------------------DriveSide Movements----------------------------*/
 /*---------------------------------------------------------------------------*/
 
-void twoWheelSide::Spin(vex::directionType dir, double velocity, vex::velocityUnits units){
-    fMotor->spin(dir, velocity, units);
-    bMotor->spin(dir, velocity, units);
+void twoWheelSide::spinWrap(vex::directionType dir, double velocity, vex::velocityUnits units){
+    front->spin(dir, velocity, units);
+    back->spin(dir, velocity, units);
 }
 
-void twoWheelSide::SpinTo(double rotation, double velocity){
-    fMotor->spinTo(rotation, degrees, velocity, velocityUnits::pct);
-    bMotor->spinTo(rotation, degrees, velocity, velocityUnits::pct);
+void twoWheelSide::spinToWrap(double rotation, double velocity){
+    front->spinTo(rotation, degrees, velocity, velocityUnits::pct);
+    back->spinTo(rotation, degrees, velocity, velocityUnits::pct);
 }

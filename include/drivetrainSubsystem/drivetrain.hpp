@@ -6,19 +6,15 @@
 /*    Description:  file for storing drivetrain class code                    */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
+
+using namespace vex;
+
 #ifndef DRIVETRAIN_HPP
 #define DRIVETRAIN_HPP
 
-#include "classes/twoWheelSide.hpp"
-#include "classes/threeWheelSide.hpp"
 class driveTrain{
     private:
-        vex::motor* FR;
-        vex::motor* BR;
-        vex::motor* FL;
-        vex::motor* BL;
-
-        vex::inertial* gyro;
+        inertial* gyro;
 
         double MotorOffset;
         double gearRatio;
@@ -26,16 +22,17 @@ class driveTrain{
         double motorConversion;
         double deadzone = 0;
 
-        twoWheelSide Lside;
-        twoWheelSide Rside;
+        wheelSide* leftSide;
+        wheelSide* rightSide;
 
     public:
+        driveTrain();
         driveTrain(
-            vex::motor &FrontLeft,
-            vex::motor &FrontRight,
-            vex::motor &BackLeft,
-            vex::motor &BackRight,
-            vex::inertial &Gyro,
+            motor* FrontLeft,
+            motor* FrontRight,
+            motor* BackLeft,
+            motor* BackRight,
+            inertial* Gyro,
             double robotlength,
             double gearratio,
             double wheelDiameter

@@ -6,7 +6,7 @@
 /*    Description:  Default header for V5 projects                            */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-//
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,8 +15,11 @@
 #include "v5.h"
 #include "v5_vcs.h"
 
-#include "classes/drivetrain.hpp"
-#include "classes/Vectors/CartesianVectors.hpp"
+#include "drivetrainSubsystem/wheelSide.hpp"
+#include "drivetrainSubsystem/twoWheelSide.hpp"
+#include "drivetrainSubsystem/drivetrain.hpp"
+
+#include "robotSubsystems/robot.hpp"
 
 #include "robot-config.h"
 #include "Autons.h"
