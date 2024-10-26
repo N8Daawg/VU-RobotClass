@@ -39,7 +39,7 @@ competition Competition;
 // define your global instances of motors and other devices here
 controller Controller;
 
-AllianceColor matchColor;
+allianceColor matchColor;
 
 double robotLength = 12;
 double gearRatio = 1;
@@ -67,11 +67,11 @@ void setprogram(void) {
 
   while(!pressed){
     if(Controller.ButtonA.pressing()){
-      matchColor = RedAlliance;
+      matchColor = redAlliance;
       pressed=true;
     }
     if(Controller.ButtonB.pressing()){
-      matchColor = BlueAlliance;
+      matchColor = blueAlliance;
       pressed=true;
     }
   }
@@ -79,11 +79,11 @@ void setprogram(void) {
   Controller.Screen.clearLine();
 
   switch (matchColor) {
-  case RedAlliance:
+  case redAlliance:
     Brain.Screen.print("Red Alliance Selected");
     break;
   
-  case BlueAlliance:
+  case blueAlliance:
     Brain.Screen.print("Blue Alliance Selected");
     break;
 
