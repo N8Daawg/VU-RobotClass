@@ -18,10 +18,15 @@ brain Brain;
 // VEXcode device constructors
 
 // DriveTrain Set up
-motor FrontLeft = motor(PORT7, ratio18_1, true);
-motor BackLeft = motor(PORT8, ratio18_1, true);
-motor FrontRight = motor(PORT12, ratio18_1, false);
-motor BackRight = motor(PORT16, ratio18_1, false);
+
+motor FLeft = motor(PORT15, ratio18_1, true);
+motor MidLeft = motor(PORT14, ratio18_1, true);
+motor BLeft = motor(PORT13, ratio18_1, true);
+
+motor FRight = motor(PORT12, ratio18_1, false);
+motor MidRight = motor(PORT11, ratio18_1, false);
+motor BRight = motor(PORT16, ratio18_1, false);
+
 inertial Gyro = inertial(PORT5);
 
 /**

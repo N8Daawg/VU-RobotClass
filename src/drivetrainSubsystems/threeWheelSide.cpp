@@ -1,22 +1,24 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       twoWheelSide.cpp                                          */
+/*    Module:       threeWheelSide.cpp                                        */
 /*    Author:       Nathan Beals                                              */
-/*    Created:      Sun March 17 2024                                         */
-/*    Description:  file for storing twoWheelSide class code                  */
+/*    Created:      Thurs Nov 21, 2024                                         */
+/*    Description:  file for storing WheelSide class code                     */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 #include "vex.h"
 using namespace vex;
 
-twoWheelSide::twoWheelSide(
-        motor* frontm,
-        motor* backm,
-        double gearratio,
+threeWheelSide::threeWheelSide(
+        motor* Frontm, 
+        motor* Middlem, 
+        motor* Backm, 
+        double gearratio, 
         double wheelDiameter
-):wheelSide(2) {
-    front = frontm;
-    back = backm;
+):wheelSide(3) {
+    front = Frontm;
+    middle = Middlem;
+    back = Backm;
 
     gearRatio = gearratio;
     wheelCircumference = wheelDiameter*M_PI;
@@ -24,39 +26,46 @@ twoWheelSide::twoWheelSide(
     motorConversion = gearRatio*(wheelCircumference)*(360);
 }
 
-twoWheelSide::~twoWheelSide(){}
+threeWheelSide::~threeWheelSide(){}
+
 
 /*---------------------------------------------------------------------------*/
 /*-----------------------Drivetrain Utility Functions------------------------*/
 /*---------------------------------------------------------------------------*/
 
-double twoWheelSide::getMotorAve(){
+double threeWheelSide::getMotorAve(){
     double ave = 0;
     if(front->position(degrees)>0){ave += front->position(degrees);
     } else {ave -= front->position(degrees);}
+    if(middle->position(degrees)>0){ave += middle->position(degrees);
+    } else {ave -= middle->position(degrees);}
     if(back->position(degrees)>0){ave += back->position(degrees);
     } else {ave -= back->position(degrees);}
     return ave/getNumOfWheels();
 }
 
-void twoWheelSide::resetDrivePositions(){
+void threeWheelSide::resetDrivePositions(){
     front->resetPosition();
+    middle->resetPosition();
     back->resetPosition();
 }
 
-void twoWheelSide::stopDriveSide(brakeType Brake){
+void threeWheelSide::stopDriveSide(brakeType Brake){
     front->stop(brake);
+    middle->stop(brake);
     back->stop(brake);
 }
 
-void twoWheelSide::setVelocity(double velocity, velocityUnits units){
+void threeWheelSide::setVelocity(double velocity, velocityUnits units){
     front->setVelocity(velocity, units);
+    middle->setVelocity(velocity, units);
     back->setVelocity(velocity, units);
 }
 
-double twoWheelSide::getMotorWattage(){
+double threeWheelSide::getMotorWattage(){
     double ave = 0;
     ave += front->power(watt);
+    ave += middle->power(watt);
     ave += back->power(watt);
     return ave/getNumOfWheels();
 }
@@ -65,17 +74,18 @@ double twoWheelSide::getMotorWattage(){
 /*----------------------------DriveSide Movements----------------------------*/
 /*---------------------------------------------------------------------------*/
 
-void twoWheelSide::spinTo(double rotation, double velocity, velocityUnits units, bool waitForCompletion){
+void threeWheelSide::spinTo(double rotation, double velocity, velocityUnits units, bool waitForCompletion){
     setVelocity(velocity, units);
-    
+
     front->spinTo(rotation, degrees, false);
-    front->spinTo(rotation, degrees, false);
-    front->spinTo(rotation, degrees, waitForCompletion);
+    middle->spinTo(rotation, degrees, false);
+    back->spinTo(rotation, degrees, waitForCompletion);
 }
 
-void twoWheelSide::spin(vex::directionType dir, double velocity, velocityUnits units){
+void threeWheelSide::spin(directionType dir, double velocity, velocityUnits units){
     setVelocity(velocity, units);
 
     front->spin(dir);
+    middle->spin(dir);
     back->spin(dir);
 }

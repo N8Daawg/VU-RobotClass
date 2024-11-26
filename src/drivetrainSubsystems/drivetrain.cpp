@@ -33,6 +33,30 @@ driveTrain::driveTrain(
     rightSide = new twoWheelSide(FrontRight, BackRight, gearratio, wheelDiameter);    
 }
 
+driveTrain::driveTrain(
+        motor* FrontLeft,
+        motor* FrontRight,
+        motor* MiddleLeft,
+        motor* MiddleRight,
+        motor* BackLeft,
+        motor* BackRight,
+        inertial* Gyro,
+        double robotlength,
+        double gearratio,
+        double wheelDiameter
+) {
+    gyro = Gyro;
+
+    MotorOffset = robotlength/2;
+    gearRatio = gearratio;
+    wheelCircumference = wheelDiameter*M_PI;
+
+    motorConversion = gearRatio*(wheelCircumference)*(360);
+
+    leftSide = new threeWheelSide(FrontLeft, MiddleLeft, BackLeft, gearratio, wheelDiameter);
+    rightSide = new threeWheelSide(FrontRight, MiddleRight, BackRight, gearratio, wheelDiameter);    
+}
+
 driveTrain::~driveTrain(){}
 
 /*---------------------------------------------------------------------------*/
@@ -41,13 +65,12 @@ driveTrain::~driveTrain(){}
 
 
 double driveTrain::getMotorAve(){
-    //return (Lside.getMotorAve()+Rside.getMotorAve())/2;
-    return 0;
+    return (leftSide->getMotorAve()+rightSide->getMotorAve())/2;
 }
 
 void driveTrain::resetDrivePositions(){
-    //FL->resetPosition();FR->resetPosition();
-    //BL->resetPosition();BR->resetPosition();
+    leftSide->resetDrivePositions();
+    rightSide->resetDrivePositions();
 }
 
 void driveTrain::stopDriveTrain(brakeType Brake){
@@ -55,23 +78,24 @@ void driveTrain::stopDriveTrain(brakeType Brake){
     rightSide->stopDriveSide(Brake);
 }
 
-void driveTrain::setVelocities(double velocity){
-    leftSide->setVelocities(velocity);
-    rightSide->setVelocities(velocity);
+void driveTrain::setVelocities(double velocity, velocityUnits units){
+    leftSide->setVelocity(velocity, units);
+    rightSide->setVelocity(velocity, units);
 }
 
 double driveTrain::getHeading(int dir){
+    double heading = 0;
     switch (dir){
     case 1: // looking left
-        return 360 - gyro->heading();
+        heading = 360 - gyro->heading();
         break;
     case 2: // looking right
-        return gyro->heading();
+        heading = gyro->heading();
         break;
     default:
-        return 0;
         break;
     }
+    return heading;
 }
 
 
@@ -223,10 +247,9 @@ int driveTrain::drive(double leftNS, double leftEW, double rightNS, double right
     } else{ //if all joystick values are within the deadzone
         double leftPower = leftNS + leftEW;
         double rightPower = rightNS - rightEW;
-        
-        leftSide->spin(fwd, leftPower, velocityUnits::pct);
-        leftSide->spin(fwd, leftPower, velocityUnits::pct);
 
+        leftSide->spin(fwd, leftPower, velocityUnits::pct);
+        rightSide->spin(fwd, rightPower, velocityUnits::pct);
     }
     return 1;
 }

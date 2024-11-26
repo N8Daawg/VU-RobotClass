@@ -1,20 +1,21 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       twoWheelSide.hpp                                          */
+/*    Module:       threeWheelSide.hpp                                        */
 /*    Author:       Nathan Beals                                              */
-/*    Created:      Sun March 17 2024                                         */
-/*    Description:  file for storing twoWheelSdie class declerations          */
+/*    Created:      Thurs Nov 21                                              */
+/*    Description:  file for storing threeWheelSide class declerations        */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#ifndef TWOWHEELSIDE_HPP
-#define TWOWHEELSIDE_HPP
+#ifndef THREEWHEELSIDE_HPP
+#define THREEWHEELSIDE_HPP
 
 using namespace vex;
 
-class twoWheelSide: public wheelSide{
+class threeWheelSide: public wheelSide{
     private:
         motor* front;
+        motor* middle;
         motor* back;
 
         double gearRatio;
@@ -22,20 +23,19 @@ class twoWheelSide: public wheelSide{
         double motorConversion;
 
     public:
-        twoWheelSide(
+        threeWheelSide(
             motor* Frontm,
+            motor* Middlem,
             motor* Backm,
             double gearratio,
             double wheelDiameter
         );
-
-        ~twoWheelSide();
+        ~threeWheelSide();
 
         /*---------------------------------------------------------------------------*/
         /*-----------------------Drivetrain Utility Functions------------------------*/
         /*---------------------------------------------------------------------------*/
 
- 
         double getMotorAve();
         void resetDrivePositions();
         void stopDriveSide(brakeType Brake);

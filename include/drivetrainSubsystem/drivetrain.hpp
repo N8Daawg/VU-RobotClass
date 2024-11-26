@@ -1,20 +1,23 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       Autons.h                                                  */
+/*    Module:       drivetrain.hpp                                            */
 /*    Author:       Nathan Beals                                              */
 /*    Created:      Sun March 17 2024                                         */
-/*    Description:  file for storing drivetrain class code                    */
+/*    Description:  file for storing drivetrain class declerations            */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-
-using namespace vex;
 
 #ifndef DRIVETRAIN_HPP
 #define DRIVETRAIN_HPP
 
+using namespace vex;
+
 class driveTrain{
     private:
         inertial* gyro;
+
+        wheelSide* leftSide;
+        wheelSide* rightSide;
 
         double MotorOffset;
         double gearRatio;
@@ -22,14 +25,24 @@ class driveTrain{
         double motorConversion;
         double deadzone = 0;
 
-        wheelSide* leftSide;
-        wheelSide* rightSide;
-
     public:
         driveTrain();
         driveTrain(
             motor* FrontLeft,
             motor* FrontRight,
+            motor* BackLeft,
+            motor* BackRight,
+            inertial* Gyro,
+            double robotlength,
+            double gearratio,
+            double wheelDiameter
+        );
+
+        driveTrain(
+            motor* FrontLeft,
+            motor* FrontRight,
+            motor* MiddleLeft,
+            motor* MiddleRight,
             motor* BackLeft,
             motor* BackRight,
             inertial* Gyro,
@@ -62,8 +75,11 @@ class driveTrain{
         /**
          * @brief sets velocities of all motors in drivetrain
         */
-        void setVelocities(double v);
+        void setVelocities(double velocity, velocityUnits units);
 
+        /**
+         * @brief gets the current heading of the robot
+         */
         double getHeading(int dir);
 
         /*-------------------------------------------------------------------------------*/
@@ -76,6 +92,9 @@ class driveTrain{
          */
         bool withinDeadzone(int x);
 
+        /**
+         * @brief checks if the joystick inputs are correct and moves accordingly
+         */
         int drive(double leftNS, double leftEW, double rightNS, double rightEW);
 
 };

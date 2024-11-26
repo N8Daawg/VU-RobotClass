@@ -23,6 +23,20 @@ public:
         double gearratio,
         double wheelDiameter
     );
+
+    Robot(
+        motor* FL,
+        motor* FR,
+        motor* ML,
+        motor* MR,
+        motor* BL,
+        motor* BR,
+        inertial* Gyro,
+        double robotlength,
+        double gearratio,
+        double wheelDiameter
+    );
+
     ~Robot();
     
     int drive(double leftNS, double leftEW, double rightNS, double rightEW);

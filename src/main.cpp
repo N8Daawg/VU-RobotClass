@@ -38,14 +38,14 @@ competition Competition;
 
 // define your global instances of motors and other devices here
 controller Controller;
-
 allianceColor matchColor;
 
 double robotLength = 12;
 double gearRatio = 1;
 double wheelDiameter = 4;
 
-Robot robot(&FrontLeft, &FrontRight, &BackLeft, &BackRight, &Gyro, robotLength, gearRatio, wheelDiameter);
+Robot robot(&FLeft, &FRight, &MidLeft, &MidRight, &BLeft, &BRight, &Gyro, 
+            robotLength, gearRatio, wheelDiameter);
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -57,10 +57,8 @@ Robot robot(&FrontLeft, &FrontRight, &BackLeft, &BackRight, &Gyro, robotLength, 
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
-void setprogram(void) {
-  
+void setprogram(void) {  
   bool pressed = false;
-
   
   Controller.Screen.newLine();
   Controller.Screen.print("color: Red(a) Blue(b)      ");
@@ -97,7 +95,7 @@ void setprogram(void) {
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-  setprogram();
+  //setprogram();
 
   if(Brain.SDcard.isInserted()){
     Brain.Screen.drawImageFromFile("Logo2.png",0,0);
@@ -142,15 +140,13 @@ void usercontrol(void) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
-
     
     LNS = Controller.Axis4.position();
     LEW = Controller.Axis3.position();
     RNS = Controller.Axis2.position();
-    REW = Controller.Axis1.position();
-    
-    robot.drive(LNS,LEW,RNS,REW);
+    REW = Controller.Axis1.position();    
 
+    robot.drive(LNS,LEW,RNS,REW);
 
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to

@@ -17,6 +17,7 @@
 
 #include "drivetrainSubsystem/wheelSide.hpp"
 #include "drivetrainSubsystem/twoWheelSide.hpp"
+#include "drivetrainSubsystem/threeWheelSide.hpp"
 #include "drivetrainSubsystem/drivetrain.hpp"
 
 #include "robotSubsystems/robot.hpp"

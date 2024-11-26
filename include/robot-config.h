@@ -13,10 +13,14 @@ extern brain Brain;
 // VEXcode devices
 
 // Drivetrain Setup
-extern motor FrontLeft;
-extern motor BackLeft;
-extern motor FrontRight;
-extern motor BackRight;
+extern motor FLeft;
+extern motor MidLeft;
+extern motor BLeft;
+
+extern motor FRight;
+extern motor MidRight;
+extern motor BRight;
+
 extern inertial Gyro;
 
 /**

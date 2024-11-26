@@ -1,71 +1,70 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       Autons.h                                                  */
+/*    Module:       wheelSide.hpp                                             */
 /*    Author:       Nathan Beals                                              */
 /*    Created:      Sun March 17 2024                                         */
-/*    Description:  file for storing drivetrain class code                    */
+/*    Description:  file for storing wheelSide super class code               */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-
-using namespace vex;
 
 #ifndef WHEELSIDE_HPP
 #define WHEELSIDE_HPP
 
+using namespace vex;
+
 class wheelSide
 {
-private:
-    int numOfWheels;
+    private:
+        int numOfWheels;
+        
+    public:
+        wheelSide();
+        wheelSide(int wheels);
+        ~wheelSide();
+        int getNumOfWheels();
 
-    virtual double getMotorAveWrap(){}
-    virtual void stopDriveSideWrap(brakeType Brake){}
-    virtual void setVelocitiesWrap(double velocity){}
+        /*---------------------------------------------------------------------------*/
+        /*-----------------------Drivetrain Utility Functions------------------------*/
+        /*---------------------------------------------------------------------------*/
 
-    virtual void spinToWrap(double rotation, double velocity){}
-    virtual void spinWrap(directionType dir, double velocity, velocityUnits units){}
-    
-public:
-    wheelSide();
-    wheelSide(int wheels);
-    ~wheelSide();
-    int getNumOfWheels();
+        /**
+         * @brief gets an average position of all motors
+        */
+        virtual double getMotorAve() = 0;
 
-    /*---------------------------------------------------------------------------*/
-    /*-----------------------Drivetrain Utility Functions------------------------*/
-    /*---------------------------------------------------------------------------*/
+        /**
+         * @brief resets all driveTrain encoders
+        */
+        virtual void resetDrivePositions() = 0;
+        
+        /**
+         * @brief stops all motors in the drivetrain
+        */
+        virtual void stopDriveSide(brakeType Brake) = 0;
 
-    /**
-     * @brief gets an average position of all motors
-    */
-    double getMotorAve(){return getMotorAveWrap();}
+        /**
+         * @brief sets velocities of all motors in drivetrain
+        */
+        virtual void setVelocity(double velocity, velocityUnits units) = 0;
 
-    /**
-     * @brief stops all motors in the drivetrain
-    */
-    void stopDriveSide(brakeType Brake){stopDriveSideWrap(Brake);}
+        /**
+         * @brief gets an average Wattage of all motors
+        */
+        virtual double getMotorWattage() = 0;
 
-    /**
-     * @brief sets velocities of all motors in drivetrain
-    */
-    void setVelocities(double velocity){setVelocitiesWrap(velocity);}
+        /*---------------------------------------------------------------------------*/
+        /*----------------------------DriveSide Movements----------------------------*/
+        /*---------------------------------------------------------------------------*/
 
-    /*---------------------------------------------------------------------------*/
-    /*----------------------------DriveSide Movements----------------------------*/
-    /*---------------------------------------------------------------------------*/
-
-    /**
-     * @brief Spins motor in a direction at a specified velocity
-     */
-    void spin(vex::directionType dir, double velocity, vex::velocityUnits units){
-        spinWrap(dir, velocity, units);
-    }
-
-    /**
-     * @brief moves drivetrain forward to a certain point
-     */
-    void spinTo(double rotation, double velocity){
-        spinToWrap(rotation, velocity);
-    }
+        /**
+         * @brief moves drivetrain forward to a certain point
+         */
+        virtual void spinTo(double rotation, double velocity, velocityUnits units, bool waitForCompletion) = 0;
+        
+        /**
+         * @brief Spins motor in a direction at a specified velocity
+         */
+        virtual void spin(vex::directionType dir, double velocity, vex::velocityUnits units) = 0;
 };
 
 #endif
