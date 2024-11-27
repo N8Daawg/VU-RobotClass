@@ -23,6 +23,8 @@ extern motor BRight;
 
 extern inertial Gyro;
 
+extern aivision vis;
+
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  *

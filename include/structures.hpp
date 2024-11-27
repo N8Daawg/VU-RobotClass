@@ -12,10 +12,18 @@
 
 using namespace vex;
 
+// Alliance Color IDs
 enum allianceColor {
+    neutral,
     redAlliance,
     blueAlliance,
-    neutral
+};
+
+// AI Classification Competition Element IDs
+enum gameElements {
+  mobileGoal,
+  redRing,
+  blueRing,
 };
 
 struct coordinate

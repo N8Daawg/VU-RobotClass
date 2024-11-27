@@ -29,11 +29,16 @@ motor BRight = motor(PORT16, ratio18_1, false);
 
 inertial Gyro = inertial(PORT5);
 
+aivision vis = aivision(PORT1, aivision::ALL_AIOBJS);
+
+
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  *
  * This should be called at the start of your int main function.
  */
 void vexcodeInit(void) {
+  vis.modelDetection(true);
+
   // Nothing to initialize
 }
