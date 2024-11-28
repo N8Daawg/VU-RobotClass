@@ -25,6 +25,16 @@ class driveTrain{
         double motorConversion;
         double deadzone = 0;
 
+        // Classifications for User Control Modes
+        enum UserControlMode {
+            tankDrive,
+            arcadeDrive
+        };
+
+        UserControlMode controlMode = tankDrive;
+        void setControlMode(UserControlMode mode){controlMode = mode;}
+        UserControlMode getControlMode() {return controlMode;}
+
     public:
         driveTrain();
         driveTrain(
@@ -85,6 +95,17 @@ class driveTrain{
         /*-------------------------------------------------------------------------------*/
         /*----------------------------Driver Control Movements---------------------------*/
         /*-------------------------------------------------------------------------------*/
+
+        /**
+         * @brief toggles the drivetrain between Tank Drive and Arcade Drive Control Modes. Drive Train starts in Tank Drive Mode.
+         */
+        void switchControlMode(){
+            if(controlMode == tankDrive){
+                controlMode = arcadeDrive;
+            } else {
+                controlMode = tankDrive;
+            }
+        }
 
         /**
          * @brief checks weather the joysticks are outside of the robot's deadzone

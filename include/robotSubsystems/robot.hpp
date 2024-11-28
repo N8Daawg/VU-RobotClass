@@ -38,6 +38,10 @@ public:
     );
 
     ~Robot();
+
+    void switchControlMode(){
+        driveT->switchControlMode();
+    }
     
     int drive(double leftNS, double leftEW, double rightNS, double rightEW);
 };

@@ -140,11 +140,19 @@ void usercontrol(void) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
-    
-    LNS = Controller.Axis4.position();
-    LEW = Controller.Axis3.position();
-    RNS = Controller.Axis2.position();
-    REW = Controller.Axis1.position();    
+
+    if(Controller.ButtonL1.pressing()){ // shift key
+      if(Controller.ButtonUp.pressing()){ // toggles between 
+        robot.switchControlMode();
+      }
+    }
+
+    int scale = 95;
+    double multiplier = 100/cbrt(scale);    
+    LNS = cbrt(Controller.Axis4.position())*multiplier;
+    LEW = cbrt(Controller.Axis3.position())*multiplier;
+    RNS = cbrt(Controller.Axis2.position())*multiplier;
+    REW = cbrt(Controller.Axis1.position())*multiplier;    
 
     robot.drive(LNS,LEW,RNS,REW);
 

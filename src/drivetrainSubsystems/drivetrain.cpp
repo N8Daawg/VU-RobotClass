@@ -11,6 +11,7 @@ using namespace vex;
 
 driveTrain::driveTrain(){}
 
+
 driveTrain::driveTrain(
         vex::motor* FrontLeft,
         vex::motor* FrontRight,
@@ -65,7 +66,9 @@ driveTrain::~driveTrain(){}
 
 
 double driveTrain::getMotorAve(){
-    return (leftSide->getMotorAve()+rightSide->getMotorAve())/2;
+    return (leftSide->getMotorAve()+
+            rightSide->getMotorAve()
+            )/2;
 }
 
 void driveTrain::resetDrivePositions(){
@@ -239,17 +242,26 @@ bool driveTrain::withinDeadzone(int x){
 }
 
 int driveTrain::drive(double leftNS, double leftEW, double rightNS, double rightEW){
+
+    double leftPower = 0;
+    double rightPower = 0;
     if(withinDeadzone(leftNS)  && withinDeadzone(leftEW) && 
        withinDeadzone(rightNS) && withinDeadzone(rightEW))
     { //no joystick is telling the robot to move
         stopDriveTrain(hold);
 
     } else{ //if all joystick values are within the deadzone
-        double leftPower = leftNS + leftEW;
-        double rightPower = rightNS - rightEW;
-
-        leftSide->spin(fwd, leftPower, velocityUnits::pct);
-        rightSide->spin(fwd, rightPower, velocityUnits::pct);
+        if(getControlMode() == tankDrive){
+            leftPower = leftNS + leftEW;
+            rightPower = rightNS - rightEW;
+        } else if(getControlMode() == arcadeDrive) { 
+            leftPower = leftNS + rightEW;
+            rightPower = leftNS - rightEW;
+        }  
     }
+
+    leftSide->spin(fwd, leftPower, velocityUnits::pct);
+    rightSide->spin(fwd, rightPower, velocityUnits::pct);  
+
     return 1;
 }
