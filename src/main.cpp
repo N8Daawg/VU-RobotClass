@@ -40,13 +40,6 @@ competition Competition;
 controller Controller;
 allianceColor matchColor;
 
-double robotLength = 12;
-double gearRatio = 1;
-double wheelDiameter = 4;
-
-Robot robot(&FLeft, &FRight, &MidLeft, &MidRight, &BLeft, &BRight, &Gyro, 
-            robotLength, gearRatio, wheelDiameter);
-
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -145,6 +138,10 @@ void usercontrol(void) {
       if(Controller.ButtonUp.pressing()){ // toggles between 
         robot.switchControlMode();
       }
+    }
+
+    if(Controller.ButtonR2.pressing()) {
+      robot.toggleMogoClamp();
     }
 
     int scale = 95;

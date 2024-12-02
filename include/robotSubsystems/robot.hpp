@@ -1,3 +1,11 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       robot.hpp                                            */
+/*    Author:       Nathan Beals                                              */
+/*    Created:      Sun March 17 2024                                         */
+/*    Description:  file for storing robot class declerations            */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
 
 #ifndef ROBOT_HPP
 #define ROBOT_HPP
@@ -10,40 +18,33 @@ class Robot
 private:
     coordinate coords;
     driveTrain* driveT;
+    clamp* mogoClamp;
 
 public:
-    Robot(double x, double y);
     Robot(
-        motor* FL,
-        motor* FR,
-        motor* BL,
-        motor* BR,
-        inertial* Gyro,
-        double robotlength,
-        double gearratio,
-        double wheelDiameter
-    );
-
-    Robot(
-        motor* FL,
-        motor* FR,
-        motor* ML,
-        motor* MR,
-        motor* BL,
-        motor* BR,
-        inertial* Gyro,
-        double robotlength,
-        double gearratio,
-        double wheelDiameter
+        driveTrain* dt,
+        clamp* MC
     );
 
     ~Robot();
+
+    /* Drive Controlls */
 
     void switchControlMode(){
         driveT->switchControlMode();
     }
     
     int drive(double leftNS, double leftEW, double rightNS, double rightEW);
+
+    /* Subsystem Controlls */
+
+    /* MOGO Clamp */
+
+    void toggleMogoClamp();
+
+    /* Intake Commands */
+
+    /* Expansion */
 };
 
 #endif

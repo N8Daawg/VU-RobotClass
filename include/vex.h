@@ -20,6 +20,8 @@
 #include "drivetrainSubsystem/threeWheelSide.hpp"
 #include "drivetrainSubsystem/drivetrain.hpp"
 
+#include "robotSubsystems/clamp.hpp"
+
 #include "robotSubsystems/robot.hpp"
 
 #include "robot-config.h"

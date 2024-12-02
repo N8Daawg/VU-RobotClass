@@ -28,8 +28,8 @@ enum gameElements {
 
 struct coordinate
 {
-    double x;
-    double y;
+  double x;
+  double y;
 };
 
 #endif

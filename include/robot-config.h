@@ -22,8 +22,9 @@ extern motor MidRight;
 extern motor BRight;
 
 extern inertial Gyro;
-
 extern aivision vis;
+
+extern Robot robot;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
