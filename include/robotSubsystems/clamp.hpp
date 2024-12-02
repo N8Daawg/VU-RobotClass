@@ -1,12 +1,11 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       clamp.hpp                                            */
+/*    Module:       clamp.hpp                                                 */
 /*    Author:       Nathan Beals                                              */
-/*    Created:      Mon Dec 2 2024                                         */
+/*    Created:      Mon Dec 2 2024                                            */
 /*    Description:  file for storing MOGO clamp class declerations            */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-
 #ifndef CLAMP_HPP
 #define CLAMP_HPP
 

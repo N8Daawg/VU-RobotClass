@@ -19,11 +19,13 @@ private:
     coordinate coords;
     driveTrain* driveT;
     clamp* mogoClamp;
-
+    intake* frontIntake;
+    
 public:
     Robot(
         driveTrain* dt,
-        clamp* MC
+        clamp* MC,
+        intake* I
     );
 
     ~Robot();
@@ -43,6 +45,9 @@ public:
     void toggleMogoClamp();
 
     /* Intake Commands */
+
+    void runIntake();
+    void runReversedIntake();
 
     /* Expansion */
 };

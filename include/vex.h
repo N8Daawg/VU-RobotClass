@@ -22,6 +22,7 @@
 #include "drivetrainSubsystem/drivetrain.hpp"
 
 #include "robotSubsystems/clamp.hpp"
+#include "robotSubsystems/intake.hpp"
 
 #include "robotSubsystems/robot.hpp"
 

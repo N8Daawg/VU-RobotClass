@@ -3,7 +3,8 @@ using namespace vex;
 
 Robot::Robot(
     driveTrain *dt,
-    clamp* MC
+    clamp* MC,
+    intake* I
 ) {
     coords.x=0;
     coords.y=0;
@@ -29,4 +30,11 @@ void Robot::toggleMogoClamp() {
 
 /* Intake Commands */
 
+void Robot::runIntake() {
+    frontIntake->runIntake();
+}
+
+void Robot::runReversedIntake() {
+    frontIntake->runReversedIntake();
+}
 /* Expansion */

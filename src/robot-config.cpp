@@ -31,13 +31,14 @@ motor MidRight = motor(PORT11, ratio18_1, false);
 motor BRight = motor(PORT16, ratio18_1, false);
 inertial Gyro = inertial(PORT5);
 
+motor IntakeDriver = motor(PORT1, ratio18_1, false);
 
 // Sensors Set up
 aivision vis = aivision(PORT1, aivision::ALL_AIOBJS);
 
 // Pneumatics Set up
 digital_out MogoClamp = digital_out(Brain.ThreeWirePort.A);
-
+digital_out intakePiston = digital_out(Brain.ThreeWirePort.B);
 
 
 // Management object constructors
@@ -46,10 +47,10 @@ driveTrain* drive = new driveTrain(
   robotLength, gearRatio, wheelDiameter);
 
 clamp* MC = new clamp(&MogoClamp);
-
+intake* i = new intake(&IntakeDriver, &intakePiston);
 
 // Robot Object construction
-Robot robot(drive, MC);
+Robot robot(drive, MC, i);
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

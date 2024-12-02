@@ -145,7 +145,7 @@ void usercontrol(void) {
     }
 
     if(Controller.ButtonL1.pressing()){
-      //run intake
+      robot.runIntake();
     }
 
     int scale = 95;
