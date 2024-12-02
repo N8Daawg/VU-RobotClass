@@ -123,21 +123,21 @@ double driveTrain::getHeading(int dir){
 /*----------------------------Drivetrain Movements---------------------------*/
 /*---------------------------------------------------------------------------*/
 
-/*
-void driveTrain::PointTurn(int dir, double theta, double v){
-    setVelocities(v);resetDrivePositions();
+
+void driveTrain::pointTurn(int dir, double theta, double velocity) {
+    resetDrivePositions();
     bool complete = false; gyro->resetRotation();double errorOffset=4;
     double ave; double head; double goal = theta*MotorOffset/motorConversion;
 
     while(!complete){
         switch (dir) {
         case 1: // Left turn
-            FL->spin(reverse);FR->spin(forward);
-            BL->spin(reverse);BR->spin(forward);
+            leftSide->spin(reverse, velocity, velocityUnits::pct);
+            rightSide->spin(forward, velocity, velocityUnits::pct);
             break;
         case 2: // right turn
-            FL->spin(forward);FR->spin(reverse);
-            BL->spin(forward);BR->spin(reverse);
+            leftSide->spin(forward, velocity, velocityUnits::pct);
+            rightSide->spin(reverse, velocity, velocityUnits::pct);
             break;
         default:
             stopDriveTrain(hold);
@@ -153,20 +153,20 @@ void driveTrain::PointTurn(int dir, double theta, double v){
     stopDriveTrain(hold);
 }
 
-void driveTrain::sidePivot(int dir, double theta, double v){
-    setVelocities(v);resetDrivePositions();
-    bool complete = false; Gyro.resetRotation();double errorOffset=4;
+void driveTrain::sidePivot(int dir, double theta, double velocity){
+    resetDrivePositions();
+    bool complete = false; Gyro.resetHeading(); double errorOffset=4;
     double ave; double head; double goal = theta*MotorOffset/motorConversion;
     
     while (!complete){
         switch (dir) {
         case 1: // Left turn
-            FR->spin(forward);BR->spin(forward);
-            ave = Rside->getMotorAve(); 
+            rightSide->spin(forward, velocity, velocityUnits::pct);
+            ave = rightSide->getMotorAve();
             break;
         case 2: // right turn
-            FL->spin(forward);BL->spin(forward);
-            ave = Lside->getMotorAve();
+            leftSide->spin(forward, velocity, velocityUnits::pct);
+            ave = leftSide->getMotorAve();
             break;
         default:
             stopDriveTrain(hold);
@@ -182,20 +182,20 @@ void driveTrain::sidePivot(int dir, double theta, double v){
     stopDriveTrain(hold);    
 }
 
-void driveTrain::driveStraight(int dir, double desiredPos, double v){
-    setVelocities(v);resetDrivePositions();
+void driveTrain::driveStraight(int dir, double desiredPos, double velocity){
+    resetDrivePositions();
     bool complete = false; double ave; double errorOffset = 4; 
     double goal = desiredPos/motorConversion;
 
     while(!complete){
         switch (dir){
         case 1: // forward movement
-            FL->spin(forward);FR->spin(forward);
-            BL->spin(forward);BR->spin(forward);
+            leftSide->spin(forward, velocity, velocityUnits::pct);
+            rightSide->spin(forward, velocity, velocityUnits::pct);
             break;
         case 2:
-            FL->spin(reverse);FR->spin(reverse);
-            BL->spin(reverse);BR->spin(reverse);
+            leftSide->spin(reverse, velocity, velocityUnits::pct);
+            rightSide->spin(reverse, velocity, velocityUnits::pct);
             break;
         default:
             stopDriveTrain(hold);
@@ -211,7 +211,7 @@ void driveTrain::driveStraight(int dir, double desiredPos, double v){
     stopDriveTrain(hold);
 }
 
-void driveTrain::driveArc(int dir, double radius, double theta, double v){
+void driveTrain::driveArc(int dir, double radius, double theta, double velocity){
     resetDrivePositions();
     bool complete = false; double ave; double head; double errorOffset = 4; double goal = (theta*radius)/motorConversion; 
     double leftspeed; double rightspeed; double leftRadius; double rightRadius;
@@ -231,14 +231,13 @@ void driveTrain::driveArc(int dir, double radius, double theta, double v){
             break;
     }
 
-    leftspeed = v*(leftRadius/radius);rightspeed = v*(rightRadius/radius);
-    Lside->setVelocities(leftspeed); Rside->setVelocities(rightspeed);
+    leftspeed = velocity*(leftRadius/radius);rightspeed = velocity*(rightRadius/radius);
     
     while(!complete){
-        FL->spin(fwd);FR->spin(fwd);
-        BL->spin(fwd);BR->spin(fwd);
-        ave = ((Lside->getMotorAve()*radius/leftRadius)+ 
-               (Rside->getMotorAve()*radius/rightRadius))/2;
+        leftSide->spin(forward, leftspeed, velocityUnits::pct);
+        rightSide->spin(forward, rightspeed, velocityUnits::pct);
+        ave = ((leftSide->getMotorAve()*radius/leftRadius)+ 
+               (rightSide->getMotorAve()*radius/rightRadius))/2;
         head = getHeading(dir);
         
         if ((theta-errorOffset < head < theta+errorOffset) ||
@@ -248,7 +247,7 @@ void driveTrain::driveArc(int dir, double radius, double theta, double v){
     }
     stopDriveTrain(hold);
 }
-*/
+
 
 /*-------------------------------------------------------------------------------*/
 /*----------------------------Driver Control Movements---------------------------*/

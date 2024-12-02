@@ -98,6 +98,19 @@ class driveTrain{
          */
         double getHeading(int dir);
 
+        /*---------------------------------------------------------------------------*/
+        /*----------------------------Drivetrain Movements---------------------------*/
+        /*---------------------------------------------------------------------------*/
+
+        void pointTurn(int dir, double theta, double velocity);
+
+        void sidePivot(int dir, double theta, double velocity);
+
+        void driveStraight(int dir, double desiredPos, double velocity);
+
+        void driveArc(int dir, double radius, double theta, double velocity);
+        
+
         /*-------------------------------------------------------------------------------*/
         /*----------------------------Driver Control Movements---------------------------*/
         /*-------------------------------------------------------------------------------*/
