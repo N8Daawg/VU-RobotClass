@@ -134,7 +134,7 @@ void usercontrol(void) {
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
 
-    if(Controller.ButtonL1.pressing()){ // shift key
+    if(Controller.ButtonR1.pressing()){ // shift key
       if(Controller.ButtonUp.pressing()){ // toggles between 
         robot.switchControlMode();
       }
@@ -142,6 +142,10 @@ void usercontrol(void) {
 
     if(Controller.ButtonR2.pressing()) {
       robot.toggleMogoClamp();
+    }
+
+    if(Controller.ButtonL1.pressing()){
+      //run intake
     }
 
     int scale = 95;

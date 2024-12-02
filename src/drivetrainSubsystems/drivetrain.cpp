@@ -13,11 +13,9 @@ driveTrain::driveTrain(){}
 
 
 driveTrain::driveTrain(
-        vex::motor* FrontLeft,
-        vex::motor* FrontRight,
-        vex::motor* BackLeft,
-        vex::motor* BackRight,
-        vex::inertial* Gyro,
+        motor* FrontLeft, motor* FrontRight,
+        motor* BackLeft, motor* BackRight,
+        inertial* Gyro,
         double robotlength,
         double gearratio,
         double wheelDiameter
@@ -35,12 +33,9 @@ driveTrain::driveTrain(
 }
 
 driveTrain::driveTrain(
-        motor* FrontLeft,
-        motor* FrontRight,
-        motor* MiddleLeft,
-        motor* MiddleRight,
-        motor* BackLeft,
-        motor* BackRight,
+        motor* FrontLeft, motor* FrontRight,
+        motor* MiddleLeft, motor* MiddleRight,
+        motor* BackLeft, motor* BackRight,
         inertial* Gyro,
         double robotlength,
         double gearratio,
@@ -56,6 +51,28 @@ driveTrain::driveTrain(
 
     leftSide = new threeWheelSide(FrontLeft, MiddleLeft, BackLeft, gearratio, wheelDiameter);
     rightSide = new threeWheelSide(FrontRight, MiddleRight, BackRight, gearratio, wheelDiameter);    
+}
+
+driveTrain::driveTrain(
+        motor* FrontLeft, motor* FrontRight,
+        motor* FrontMiddleLeft, motor* FrontMiddleRight,
+        motor* BackMiddleLeft, motor* BackMiddleRight,
+        motor* BackLeft, motor* BackRight,
+        inertial* Gyro,
+        double robotlength,
+        double gearratio,
+        double wheelDiameter
+) {
+    gyro = Gyro;
+
+    MotorOffset = robotlength/2;
+    gearRatio = gearratio;
+    wheelCircumference = wheelDiameter*M_PI;
+
+    motorConversion = gearRatio*(wheelCircumference)*(360);
+
+    leftSide = new fourWheelSide(FrontLeft, FrontMiddleLeft, BackMiddleLeft, BackLeft, gearratio, wheelDiameter);
+    rightSide = new fourWheelSide(FrontRight, FrontMiddleRight, BackMiddleRight, BackRight, gearratio, wheelDiameter);    
 }
 
 driveTrain::~driveTrain(){}

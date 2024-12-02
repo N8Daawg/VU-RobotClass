@@ -38,10 +38,8 @@ class driveTrain{
     public:
         driveTrain();
         driveTrain(
-            motor* FrontLeft,
-            motor* FrontRight,
-            motor* BackLeft,
-            motor* BackRight,
+            motor* FrontLeft, motor* FrontRight,
+            motor* BackLeft, motor* BackRight,
             inertial* Gyro,
             double robotlength,
             double gearratio,
@@ -49,12 +47,20 @@ class driveTrain{
         );
 
         driveTrain(
-            motor* FrontLeft,
-            motor* FrontRight,
-            motor* MiddleLeft,
-            motor* MiddleRight,
-            motor* BackLeft,
-            motor* BackRight,
+            motor* FrontLeft, motor* FrontRight,
+            motor* MiddleLeft, motor* MiddleRight,
+            motor* BackLeft, motor* BackRight,
+            inertial* Gyro,
+            double robotlength,
+            double gearratio,
+            double wheelDiameter
+        );
+
+        driveTrain(
+            motor* FrontLeft, motor* FrontRight,
+            motor* FrontMiddleLeft, motor* FrontMiddleRight,
+            motor* BackMiddleLeft, motor* BackMiddleRight,
+            motor* BackLeft, motor* BackRight,
             inertial* Gyro,
             double robotlength,
             double gearratio,
