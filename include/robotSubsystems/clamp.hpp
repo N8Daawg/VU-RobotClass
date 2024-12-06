@@ -11,21 +11,31 @@
 
 using namespace vex;
 
-class clamp
-{
-private:
-    bool clampState = true;
-    digital_out* MogoClamp;
+class clamp {
+    private:
+        bool clampState = true;
+        digital_out* MogoClamp;
 
-public:
-    clamp(digital_out* MC);
-    ~clamp();
+    public:
+        clamp(digital_out* MC);
+        ~clamp();
 
-    // Clamp functionality
-    
-    void open();
-    void close();
-    void toggle();
+        // Clamp functionality
+        
+        /**
+         * @brief
+         */
+        void open();
+        
+        /**
+         * @brief
+         */
+        void close();
+        
+        /**
+         * @brief
+         */
+        void toggle();
 };
 
 #endif

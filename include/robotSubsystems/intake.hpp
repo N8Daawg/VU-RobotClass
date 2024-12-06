@@ -10,30 +10,55 @@
 #define INTAKE_HPP
 using namespace vex;
 
-class intake
-{
-private:
-    //front intake
-    motor* driver;
-    digital_out* actuator;
+class intake {
+    private:
+        //front intake
+        motor* driver;
+        digital_out* actuator;
 
-    //motor* ringConveyorBelt;
-public:
-    intake(
-        motor* DriveMotor,
-        digital_out* ActuatingPiston
-    );
-    ~intake();
+        //motor* ringConveyorBelt;
+    public:
+        intake(
+            motor* DriveMotor,
+            digital_out* ActuatingPiston
+        );
+        ~intake();
 
-    void extend();
-    void retract();
+        /**
+         * @brief
+         */
+        void extend();
+        
+        /**
+         * @brief
+         */
+        void retract();
 
-    void setVelocity(double velocity, velocityUnits units);
-    void runIntake();
-    void runReversedIntake();
-    void stopIntake();
+        /**
+         * @brief
+         */
+        void setVelocity(double velocity, velocityUnits units);
+        
+        /**
+         * @brief
+         */
+        void runIntake();
+        
+        
+        /**
+         * @brief
+         */
+        void runReversedIntake();
+        
+        /**
+         * @brief
+         */
+        void stopIntake();
 
-    void runConveyor();
+        /**
+         * @brief
+         */
+        void runConveyor();
 };
 
 #endif

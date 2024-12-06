@@ -1,9 +1,9 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       robot.hpp                                            */
+/*    Module:       robot.hpp                                                 */
 /*    Author:       Nathan Beals                                              */
 /*    Created:      Sun March 17 2024                                         */
-/*    Description:  file for storing robot class declerations            */
+/*    Description:  file for storing robot class declerations                 */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
@@ -13,43 +13,58 @@
 using namespace vex;
 
 
-class Robot
-{
-private:
-    coordinate coords;
-    driveTrain* driveT;
-    clamp* mogoClamp;
-    intake* frontIntake;
-    
-public:
-    Robot(
-        driveTrain* dt,
-        clamp* MC,
-        intake* I
-    );
+class Robot {
+    private:
+        coordinate coords;
+        driveTrain* driveT;
+        clamp* mogoClamp;
+        intake* frontIntake;
+        
+    public:
+        Robot(
+            driveTrain* dt,
+            clamp* MC,
+            intake* I
+        );
 
-    ~Robot();
+        ~Robot();
 
-    /* Drive Controlls */
+        /* Drive Controlls */
 
-    void switchControlMode(){
-        driveT->switchControlMode();
-    }
-    
-    int drive(double leftNS, double leftEW, double rightNS, double rightEW);
+        /**
+         * @brief Switch between Arcade drive and tank drive
+         */
+        void switchControlMode(){
+            driveT->switchControlMode();
+        }
+        
+        /**
+         * 
+         */
+        int drive(double leftNS, double leftEW, double rightNS, double rightEW);
 
-    /* Subsystem Controlls */
+        /* Subsystem Controlls */
 
-    /* MOGO Clamp */
+        /* MOGO Clamp */
 
-    void toggleMogoClamp();
+        /**
+         * 
+         */
+        void toggleMogoClamp();
 
-    /* Intake Commands */
+        /* Intake Commands */
 
-    void runIntake();
-    void runReversedIntake();
+        /**
+         * 
+         */
+        void runIntake();
 
-    /* Expansion */
+        /**
+         * 
+         */
+        void runReversedIntake();
+
+        /* Expansion */
 };
 
 #endif

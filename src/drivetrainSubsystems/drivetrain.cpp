@@ -259,12 +259,12 @@ bool driveTrain::withinDeadzone(int x){
 
 int driveTrain::drive(double leftNS, double leftEW, double rightNS, double rightEW){
 
-    double leftPower = 0;
-    double rightPower = 0;
+    double leftPower = 0; double rightPower = 0;
     if(withinDeadzone(leftNS)  && withinDeadzone(leftEW) && 
        withinDeadzone(rightNS) && withinDeadzone(rightEW))
     { //no joystick is telling the robot to move
         stopDriveTrain(hold);
+        return 1;
 
     } else{ //if all joystick values are within the deadzone
         if(getControlMode() == tankDrive){
@@ -273,11 +273,11 @@ int driveTrain::drive(double leftNS, double leftEW, double rightNS, double right
         } else if(getControlMode() == arcadeDrive) { 
             leftPower = leftNS + rightEW;
             rightPower = leftNS - rightEW;
-        }  
+        }
     }
 
     leftSide->spin(fwd, leftPower, velocityUnits::pct);
-    rightSide->spin(fwd, rightPower, velocityUnits::pct);  
+    rightSide->spin(fwd, rightPower, velocityUnits::pct);
 
     return 1;
 }

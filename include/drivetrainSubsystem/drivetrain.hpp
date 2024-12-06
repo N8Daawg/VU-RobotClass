@@ -35,6 +35,12 @@ class driveTrain{
         void setControlMode(UserControlMode mode){controlMode = mode;}
         UserControlMode getControlMode() {return controlMode;}
 
+        /**
+         * @brief checks weather the joysticks are outside of the robot's deadzone
+         * @param x the input value of the controller that's being checked
+         */
+        bool withinDeadzone(int x);
+
     public:
         driveTrain();
         driveTrain(
@@ -85,16 +91,20 @@ class driveTrain{
 
         /**
          * @brief stops all motors in the drivetrain
+         * @param Brake the braketype to stop with
         */
-        void stopDriveTrain(vex::brakeType Brake);
+        void stopDriveTrain(brakeType Brake);
 
         /**
          * @brief sets velocities of all motors in drivetrain
+         * @param velocity the velocity of the drivetrain in units
+         * @param units the units of velocity in; pct, rpm, or dps
         */
         void setVelocities(double velocity, velocityUnits units);
 
         /**
          * @brief gets the current heading of the robot
+         * @param dir specifies whether the robot is looking left or right
          */
         double getHeading(int dir);
 
@@ -102,12 +112,41 @@ class driveTrain{
         /*----------------------------Drivetrain Movements---------------------------*/
         /*---------------------------------------------------------------------------*/
 
+        /**
+         * @brief 
+         * 
+         * @param dir
+         * @param theta
+         * @param velocity
+         */
         void pointTurn(int dir, double theta, double velocity);
 
+        /**
+         * @brief
+         * 
+         * @param dir
+         * @param theta
+         * @param velocity
+         */
         void sidePivot(int dir, double theta, double velocity);
 
+        /**
+         * @brief
+         * 
+         * @param dir
+         * @param desiredPos
+         * @param velocity
+         */
         void driveStraight(int dir, double desiredPos, double velocity);
 
+        /**
+         * @brief
+         * 
+         * @param dir
+         * @param radius
+         * @param theta
+         * @param velocity
+         */
         void driveArc(int dir, double radius, double theta, double velocity);
         
 
@@ -120,17 +159,11 @@ class driveTrain{
          */
         void switchControlMode(){
             if(controlMode == tankDrive){
-                controlMode = arcadeDrive;
+                setControlMode(arcadeDrive);
             } else {
-                controlMode = tankDrive;
+                setControlMode(tankDrive);
             }
         }
-
-        /**
-         * @brief checks weather the joysticks are outside of the robot's deadzone
-         * @param x the input value of the controller that's being checked
-         */
-        bool withinDeadzone(int x);
 
         /**
          * @brief checks if the joystick inputs are correct and moves accordingly

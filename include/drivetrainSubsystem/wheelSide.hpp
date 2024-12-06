@@ -12,8 +12,7 @@
 
 using namespace vex;
 
-class wheelSide
-{
+class wheelSide {
     private:
         int numOfWheels;
         
@@ -58,13 +57,22 @@ class wheelSide
 
         /**
          * @brief moves drivetrain forward to a certain point
+         * 
+         * @param rotation
+         * @param velocity
+         * @param untits
+         * @param waitForCompletion
          */
         virtual void spinTo(double rotation, double velocity, velocityUnits units, bool waitForCompletion) = 0;
         
         /**
          * @brief Spins motor in a direction at a specified velocity
+         * 
+         * @param dir
+         * @param velocity
+         * @param units
          */
-        virtual void spin(vex::directionType dir, double velocity, vex::velocityUnits units) = 0;
+        virtual void spin(directionType dir, double velocity, velocityUnits units) = 0;
 };
 
 #endif

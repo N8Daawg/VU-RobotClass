@@ -12,20 +12,27 @@
 
 using namespace vex;
 
-// Alliance Color IDs
+/**
+ *  @brief Alliance Color IDs
+ */ 
 enum allianceColor {
     neutral,
     redAlliance,
     blueAlliance,
 };
 
-// AI Classification Competition Element IDs
+/**
+ * @brief AI Classification Competition Element IDs
+ */
 enum gameElements {
   mobileGoal,
   redRing,
   blueRing,
 };
 
+/**
+ * @brief Coordinte structure for odom tracking
+ */
 struct coordinate
 {
   double x;
