@@ -17,6 +17,11 @@ class clamp {
         digital_out* MogoClamp;
 
     public:
+    
+        /**
+         * @brief
+         * @param MC the mogo clamp being controlled
+         */
         clamp(digital_out* MC);
         ~clamp();
 

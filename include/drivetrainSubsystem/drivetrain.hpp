@@ -14,7 +14,7 @@ using namespace vex;
 
 class driveTrain{
     private:
-        inertial* gyro;
+        sensorUnit* sensorControler;
 
         wheelSide* leftSide;
         wheelSide* rightSide;
@@ -31,7 +31,7 @@ class driveTrain{
             arcadeDrive
         };
 
-        UserControlMode controlMode = tankDrive;
+        UserControlMode controlMode = arcadeDrive;
         void setControlMode(UserControlMode mode){controlMode = mode;}
         UserControlMode getControlMode() {return controlMode;}
 
@@ -42,32 +42,53 @@ class driveTrain{
         bool withinDeadzone(int x);
 
     public:
-        driveTrain();
+        
+        /**
+         * @brief
+         * 
+         * @param robotlength
+         * @param gearratio
+         * @param wheelDiameter
+         */
         driveTrain(
             motor* FrontLeft, motor* FrontRight,
             motor* BackLeft, motor* BackRight,
-            inertial* Gyro,
+            sensorUnit* senosrs,
             double robotlength,
             double gearratio,
             double wheelDiameter
         );
 
+        /**
+         * @brief
+         * 
+         * @param robotlength
+         * @param gearratio
+         * @param wheelDiameter
+         */
         driveTrain(
             motor* FrontLeft, motor* FrontRight,
             motor* MiddleLeft, motor* MiddleRight,
             motor* BackLeft, motor* BackRight,
-            inertial* Gyro,
+            sensorUnit* senosrs,
             double robotlength,
             double gearratio,
             double wheelDiameter
         );
 
+        /**
+         * @brief
+         * 
+         * @param robotlength
+         * @param gearratio
+         * @param wheelDiameter
+         */
         driveTrain(
             motor* FrontLeft, motor* FrontRight,
             motor* FrontMiddleLeft, motor* FrontMiddleRight,
             motor* BackMiddleLeft, motor* BackMiddleRight,
             motor* BackLeft, motor* BackRight,
-            inertial* Gyro,
+            sensorUnit* senosrs,
             double robotlength,
             double gearratio,
             double wheelDiameter
@@ -106,7 +127,9 @@ class driveTrain{
          * @brief gets the current heading of the robot
          * @param dir specifies whether the robot is looking left or right
          */
-        double getHeading(int dir);
+        double getHeading(int dir){
+            return sensorControler->getHeading(dir);
+        }
 
         /*---------------------------------------------------------------------------*/
         /*----------------------------Drivetrain Movements---------------------------*/

@@ -15,6 +15,8 @@
 #include "v5.h"
 #include "v5_vcs.h"
 
+#include "drivetrainSubsystem/sensorUnit.hpp"
+
 #include "drivetrainSubsystem/wheelSide.hpp"
 #include "drivetrainSubsystem/twoWheelSide.hpp"
 #include "drivetrainSubsystem/threeWheelSide.hpp"

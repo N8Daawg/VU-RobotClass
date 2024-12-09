@@ -18,6 +18,13 @@ class intake {
 
         //motor* ringConveyorBelt;
     public:
+
+        /**
+         * @brief
+         * 
+         * @param DriveMotor the intake gear box
+         * @param ActuatingPiston the pneumatic system actuating the intake in and out.
+         */
         intake(
             motor* DriveMotor,
             digital_out* ActuatingPiston

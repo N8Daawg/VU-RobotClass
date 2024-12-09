@@ -9,19 +9,20 @@
 using namespace vex;
 
 extern brain Brain;
+extern controller Controller;
 
 // VEXcode devices
 
 // Drivetrain Setup
-extern motor FLeft;
-extern motor MidLeft;
-extern motor BLeft;
+//extern motor FLeft;
+//extern motor MidLeft;
+//extern motor BLeft;
 
-extern motor FRight;
-extern motor MidRight;
-extern motor BRight;
+//extern motor FRight;
+//extern motor MidRight;
+//extern motor BRight;
 
-extern inertial Gyro;
+//extern inertial gyroscope;
 extern aivision vis;
 
 extern Robot robot;

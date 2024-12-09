@@ -37,7 +37,6 @@ using namespace vex;
 competition Competition;
 
 // define your global instances of motors and other devices here
-controller Controller;
 allianceColor matchColor;
 
 /*---------------------------------------------------------------------------*/
@@ -98,6 +97,22 @@ void pre_auton(void) {
   // Example: clearing encoders, setting servo positions, ...
 }
 
+event checkGameElement = event();
+
+void hasGameElementCallback() {
+  Brain.Screen.setFont(mono40);
+  Brain.Screen.clearLine(1, black);
+  Brain.Screen.setCursor(Brain.Screen.row(), 1);
+  Brain.Screen.setCursor(1, 1);
+
+  vis.takeSnapshot(aivision::ALL_AIOBJS);
+  if (vis.objectCount > 0) {
+    Brain.Screen.print("Game Element Found");
+  } else {
+    Brain.Screen.print("No Game Element Found");
+  }
+}
+
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
 /*                              Autonomous Task                              */
@@ -110,6 +125,8 @@ void pre_auton(void) {
 
 void autonomous(void) {
   // ..........................................................................
+  robot.autonomous();
+  
   test();
   // ..........................................................................
 }
@@ -126,10 +143,13 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
+  checkGameElement(hasGameElementCallback);
 
   double LNS; double LEW;
   double RNS; double REW;
   while (1) {
+    checkGameElement.broadcastAndWait();
+
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
@@ -150,8 +170,8 @@ void usercontrol(void) {
 
     int scale = 95;
     double multiplier = 100/cbrt(scale);    
-    LNS = cbrt(Controller.Axis4.position())*multiplier;
-    LEW = cbrt(Controller.Axis3.position())*multiplier;
+    LNS = cbrt(Controller.Axis3.position())*multiplier;
+    LEW = cbrt(Controller.Axis4.position())*multiplier;
     RNS = cbrt(Controller.Axis2.position())*multiplier;
     REW = cbrt(Controller.Axis1.position())*multiplier;    
 

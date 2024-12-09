@@ -38,3 +38,13 @@ void Robot::runReversedIntake() {
     frontIntake->runReversedIntake();
 }
 /* Expansion */
+
+void Robot::autonomous(){
+    //testing autonomous drive functions
+    //driveT->driveStraight(1, 5, 15);      test successful
+    //driveT->pointTurn(2,90,15);           test successful
+    //driveT->sidePivot(1,90,15);           test successful
+    //driveT->driveArc(1, 28, 90, 15);      test successful
+
+    
+}

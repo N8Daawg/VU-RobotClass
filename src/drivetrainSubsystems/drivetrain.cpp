@@ -1,6 +1,6 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       Autons.h                                                  */
+/*    Module:       drivetrain.cpp                                            */
 /*    Author:       Nathan Beals                                              */
 /*    Created:      Sun March 17 2024                                         */
 /*    Description:  file for storing drivetrain class code                    */
@@ -9,39 +9,36 @@
 #include "vex.h"
 using namespace vex;
 
-driveTrain::driveTrain(){}
-
-
 driveTrain::driveTrain(
-        motor* FrontLeft, motor* FrontRight,
-        motor* BackLeft, motor* BackRight,
-        inertial* Gyro,
+        motor* FrontLeft,   motor* FrontRight,
+        motor* BackLeft,    motor* BackRight,
+        sensorUnit* senosrs,
         double robotlength,
         double gearratio,
         double wheelDiameter
 ) {
-    gyro = Gyro;
+    sensorControler = senosrs;
 
     MotorOffset = robotlength/2;
     gearRatio = gearratio;
     wheelCircumference = wheelDiameter*M_PI;
 
-    motorConversion = gearRatio*(wheelCircumference)*(360);
+    motorConversion = gearRatio*(wheelCircumference)/(360);
 
     leftSide = new twoWheelSide(FrontLeft, BackLeft, gearratio, wheelDiameter);
     rightSide = new twoWheelSide(FrontRight, BackRight, gearratio, wheelDiameter);    
 }
 
 driveTrain::driveTrain(
-        motor* FrontLeft, motor* FrontRight,
-        motor* MiddleLeft, motor* MiddleRight,
-        motor* BackLeft, motor* BackRight,
-        inertial* Gyro,
+        motor* FrontLeft,   motor* FrontRight,
+        motor* MiddleLeft,  motor* MiddleRight,
+        motor* BackLeft,    motor* BackRight,
+        sensorUnit* senosrs,
         double robotlength,
         double gearratio,
         double wheelDiameter
 ) {
-    gyro = Gyro;
+    sensorControler = senosrs;
 
     MotorOffset = robotlength/2;
     gearRatio = gearratio;
@@ -54,22 +51,25 @@ driveTrain::driveTrain(
 }
 
 driveTrain::driveTrain(
-        motor* FrontLeft, motor* FrontRight,
+        motor* FrontLeft,       motor* FrontRight,
         motor* FrontMiddleLeft, motor* FrontMiddleRight,
-        motor* BackMiddleLeft, motor* BackMiddleRight,
-        motor* BackLeft, motor* BackRight,
-        inertial* Gyro,
+        motor* BackMiddleLeft,  motor* BackMiddleRight,
+        motor* BackLeft,        motor* BackRight,
+        sensorUnit* senosrs,
         double robotlength,
         double gearratio,
         double wheelDiameter
 ) {
-    gyro = Gyro;
+    sensorControler = senosrs;
 
     MotorOffset = robotlength/2;
     gearRatio = gearratio;
     wheelCircumference = wheelDiameter*M_PI;
 
-    motorConversion = gearRatio*(wheelCircumference)*(360);
+    motorConversion = gearRatio*(wheelCircumference)/(360);
+
+    Brain.Screen.print("%f * %f / 360 = %f ", gearRatio, wheelCircumference, motorConversion );
+    Brain.Screen.newLine();
 
     leftSide = new fourWheelSide(FrontLeft, FrontMiddleLeft, BackMiddleLeft, BackLeft, gearratio, wheelDiameter);
     rightSide = new fourWheelSide(FrontRight, FrontMiddleRight, BackMiddleRight, BackRight, gearratio, wheelDiameter);    
@@ -103,21 +103,6 @@ void driveTrain::setVelocities(double velocity, velocityUnits units){
     rightSide->setVelocity(velocity, units);
 }
 
-double driveTrain::getHeading(int dir){
-    double heading = 0;
-    switch (dir){
-    case 1: // looking left
-        heading = 360 - gyro->heading();
-        break;
-    case 2: // looking right
-        heading = gyro->heading();
-        break;
-    default:
-        break;
-    }
-    return heading;
-}
-
 
 /*---------------------------------------------------------------------------*/
 /*----------------------------Drivetrain Movements---------------------------*/
@@ -125,9 +110,9 @@ double driveTrain::getHeading(int dir){
 
 
 void driveTrain::pointTurn(int dir, double theta, double velocity) {
-    resetDrivePositions();
-    bool complete = false; gyro->resetRotation();double errorOffset=4;
-    double ave; double head; double goal = theta*MotorOffset/motorConversion;
+    resetDrivePositions();  sensorControler->resetHeading();
+    bool complete = false;  double errorOffset=6;
+    double head;
 
     while(!complete){
         switch (dir) {
@@ -144,9 +129,10 @@ void driveTrain::pointTurn(int dir, double theta, double velocity) {
             complete=true;
             break;
         }
-        ave = getMotorAve(); head = getHeading(dir);
-        if ((theta-errorOffset < head < theta+errorOffset) ||
-            (goal-errorOffset < ave < goal+errorOffset)){
+
+
+        head = getHeading(dir);
+        if ((theta+errorOffset > head) && (theta-errorOffset < head)){
                 complete = true;
         }
     }
@@ -155,7 +141,7 @@ void driveTrain::pointTurn(int dir, double theta, double velocity) {
 
 void driveTrain::sidePivot(int dir, double theta, double velocity){
     resetDrivePositions();
-    bool complete = false; Gyro.resetHeading(); double errorOffset=4;
+    bool complete = false; sensorControler->resetHeading(); double errorOffset=4;
     double ave; double head; double goal = theta*MotorOffset/motorConversion;
     
     while (!complete){
@@ -174,8 +160,8 @@ void driveTrain::sidePivot(int dir, double theta, double velocity){
             break;
         }
         head = getHeading(dir);
-        if ((theta-errorOffset < head < theta+errorOffset) ||
-            (goal-errorOffset < ave < goal+errorOffset)){
+        if (((theta-errorOffset < head) && (head < theta+errorOffset)) ||
+            ((goal-errorOffset < ave) && (ave < goal+errorOffset))){
                 complete = true;
         }
     }
@@ -183,8 +169,9 @@ void driveTrain::sidePivot(int dir, double theta, double velocity){
 }
 
 void driveTrain::driveStraight(int dir, double desiredPos, double velocity){
+
     resetDrivePositions();
-    bool complete = false; double ave; double errorOffset = 4; 
+    bool complete = false; double ave; double errorOffset = 5; 
     double goal = desiredPos/motorConversion;
 
     while(!complete){
@@ -197,13 +184,13 @@ void driveTrain::driveStraight(int dir, double desiredPos, double velocity){
             leftSide->spin(reverse, velocity, velocityUnits::pct);
             rightSide->spin(reverse, velocity, velocityUnits::pct);
             break;
-        default:
+        default:            
             stopDriveTrain(hold);
             complete=true;
             break;
         }
         ave = getMotorAve();
-        if (goal-errorOffset < ave < goal+errorOffset){
+        if (goal-errorOffset < ave && goal+errorOffset > ave ){
                 complete = true;
         }
     }
@@ -231,20 +218,23 @@ void driveTrain::driveArc(int dir, double radius, double theta, double velocity)
             break;
     }
 
-    leftspeed = velocity*(leftRadius/radius);rightspeed = velocity*(rightRadius/radius);
+    leftspeed = velocity*(leftRadius/radius);
+    rightspeed = velocity*(rightRadius/radius);
     
     while(!complete){
         leftSide->spin(forward, leftspeed, velocityUnits::pct);
         rightSide->spin(forward, rightspeed, velocityUnits::pct);
+
         ave = ((leftSide->getMotorAve()*radius/leftRadius)+ 
                (rightSide->getMotorAve()*radius/rightRadius))/2;
         head = getHeading(dir);
         
-        if ((theta-errorOffset < head < theta+errorOffset) ||
-            (goal-errorOffset < ave < goal+errorOffset)){
+        if (((theta-errorOffset < head) && (head < theta+errorOffset)) ||
+            ((goal-errorOffset < ave) && (ave < goal+errorOffset))){
                 complete = true;
         }
     }
+    
     stopDriveTrain(hold);
 }
 
@@ -271,13 +261,17 @@ int driveTrain::drive(double leftNS, double leftEW, double rightNS, double right
             leftPower = leftNS + leftEW;
             rightPower = rightNS - rightEW;
         } else if(getControlMode() == arcadeDrive) { 
-            leftPower = leftNS + rightEW;
-            rightPower = leftNS - rightEW;
+            leftPower = leftNS + rightEW*0.70;
+            rightPower = leftNS - rightEW*0.70;
         }
     }
 
     leftSide->spin(fwd, leftPower, velocityUnits::pct);
     rightSide->spin(fwd, rightPower, velocityUnits::pct);
+
+    //Brain.Screen.clearLine();
+    //Brain.Screen.print("North South Odom Pod value: ");
+    //Brain.Screen.print(sensorControler->getPosNS());
 
     return 1;
 }

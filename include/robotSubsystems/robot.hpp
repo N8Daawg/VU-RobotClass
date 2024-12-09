@@ -16,11 +16,20 @@ using namespace vex;
 class Robot {
     private:
         coordinate coords;
+        
         driveTrain* driveT;
         clamp* mogoClamp;
         intake* frontIntake;
         
     public:
+
+        /**
+         * @brief creates a robot object to monitor, manage, and control the robots' systems
+         * 
+         * @param dt the drive train controller
+         * @param MC the mogo clamp controller
+         * @param I the intake system controller 
+         */
         Robot(
             driveTrain* dt,
             clamp* MC,
@@ -48,23 +57,26 @@ class Robot {
         /* MOGO Clamp */
 
         /**
-         * 
+         * @brief
          */
         void toggleMogoClamp();
 
         /* Intake Commands */
 
         /**
-         * 
+         * @brief
          */
         void runIntake();
 
         /**
-         * 
+         * @brief
          */
         void runReversedIntake();
 
         /* Expansion */
+
+
+        void autonomous();
 };
 
 #endif

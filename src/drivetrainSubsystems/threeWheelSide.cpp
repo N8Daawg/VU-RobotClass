@@ -2,7 +2,7 @@
 /*                                                                            */
 /*    Module:       threeWheelSide.cpp                                        */
 /*    Author:       Nathan Beals                                              */
-/*    Created:      Thurs Nov 21, 2024                                         */
+/*    Created:      Thurs Nov 21, 2024                                        */
 /*    Description:  file for storing WheelSide class code                     */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/

@@ -17,7 +17,6 @@ class wheelSide {
         int numOfWheels;
         
     public:
-        wheelSide();
         wheelSide(int wheels);
         ~wheelSide();
         int getNumOfWheels();

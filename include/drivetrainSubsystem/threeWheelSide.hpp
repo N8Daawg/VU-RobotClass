@@ -23,6 +23,13 @@ class threeWheelSide: public wheelSide{
         double motorConversion;
 
     public:
+
+        /**
+         * @brief
+         * 
+         * @param gearratio
+         * @param wheelDiameter
+         */
         threeWheelSide(
             motor* Frontm,
             motor* Middlem,

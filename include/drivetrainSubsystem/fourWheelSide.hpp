@@ -24,6 +24,13 @@ class fourWheelSide: public wheelSide{
         double motorConversion;
 
     public:
+
+        /**
+         * @brief
+         * 
+         * @param gearratio
+         * @param wheelDiameter
+         */
         fourWheelSide(
             motor* Frontm,
             motor* Middlem1,
