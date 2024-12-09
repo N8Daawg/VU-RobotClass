@@ -41,6 +41,19 @@ class driveTrain{
          */
         bool withinDeadzone(int x);
 
+
+        /* ----------  Movement functions for PID algorithms ----------- */
+
+        /**
+         * @brief 
+         * 
+         * @param dir
+         * @param leftVelocity
+         * @param rightVelocity
+         */
+        void pointTurn(int dir, double turnVelocity);
+
+
     public:
         
         /**
@@ -132,17 +145,21 @@ class driveTrain{
         }
 
         /*---------------------------------------------------------------------------*/
-        /*----------------------------Drivetrain Movements---------------------------*/
+        /*-------------------------------PID ALROGITHMS------------------------------*/
         /*---------------------------------------------------------------------------*/
 
         /**
          * @brief 
          * 
          * @param dir
-         * @param theta
-         * @param velocity
+         * @param desiredPos
          */
-        void pointTurn(int dir, double theta, double velocity);
+        void gyroTurn(int dir, double desiredPos);
+
+
+        /*---------------------------------------------------------------------------*/
+        /*----------------------------Drivetrain Movements---------------------------*/
+        /*---------------------------------------------------------------------------*/
 
         /**
          * @brief
@@ -173,6 +190,10 @@ class driveTrain{
         void driveArc(int dir, double radius, double theta, double velocity);
         
 
+
+        
+        
+        
         /*-------------------------------------------------------------------------------*/
         /*----------------------------Driver Control Movements---------------------------*/
         /*-------------------------------------------------------------------------------*/

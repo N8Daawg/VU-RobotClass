@@ -148,7 +148,7 @@ void usercontrol(void) {
   double LNS; double LEW;
   double RNS; double REW;
   while (1) {
-    checkGameElement.broadcastAndWait();
+    //checkGameElement.broadcastAndWait();
 
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo

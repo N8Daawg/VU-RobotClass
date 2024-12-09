@@ -18,7 +18,7 @@ sensorUnit::sensorUnit(
     NSPod = pod1;
     EWPod = pod2;
 
-
+    gyro->calibrate();
     gyro->resetHeading();
 }
 
@@ -42,7 +42,7 @@ double sensorUnit::getHeading(int dir){
             break;
     }
 
-    if (heading==360){
+    if (heading > 359){
         return 0;
     } else {
         return heading;

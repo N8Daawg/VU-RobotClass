@@ -108,37 +108,6 @@ void driveTrain::setVelocities(double velocity, velocityUnits units){
 /*----------------------------Drivetrain Movements---------------------------*/
 /*---------------------------------------------------------------------------*/
 
-
-void driveTrain::pointTurn(int dir, double theta, double velocity) {
-    resetDrivePositions();  sensorControler->resetHeading();
-    bool complete = false;  double errorOffset=6;
-    double head;
-
-    while(!complete){
-        switch (dir) {
-        case 1: // Left turn
-            leftSide->spin(reverse, velocity, velocityUnits::pct);
-            rightSide->spin(forward, velocity, velocityUnits::pct);
-            break;
-        case 2: // right turn
-            leftSide->spin(forward, velocity, velocityUnits::pct);
-            rightSide->spin(reverse, velocity, velocityUnits::pct);
-            break;
-        default:
-            stopDriveTrain(hold);
-            complete=true;
-            break;
-        }
-
-
-        head = getHeading(dir);
-        if ((theta+errorOffset > head) && (theta-errorOffset < head)){
-                complete = true;
-        }
-    }
-    stopDriveTrain(hold);
-}
-
 void driveTrain::sidePivot(int dir, double theta, double velocity){
     resetDrivePositions();
     bool complete = false; sensorControler->resetHeading(); double errorOffset=4;
@@ -238,6 +207,85 @@ void driveTrain::driveArc(int dir, double radius, double theta, double velocity)
     stopDriveTrain(hold);
 }
 
+/*---------------------------------------------------------------------------*/
+/*-------------------------------PID ALROGITHMS------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+void driveTrain::pointTurn(int dir, double turnVelocity){
+    switch (dir) {
+        case 1: // Left turn
+            leftSide->spin(reverse, turnVelocity, velocityUnits::pct);
+            rightSide->spin(forward, turnVelocity, velocityUnits::pct);
+            break;
+        case 2: // right turn
+            leftSide->spin(forward, turnVelocity, velocityUnits::pct);
+            rightSide->spin(reverse, turnVelocity, velocityUnits::pct);
+            break;
+        default:
+            stopDriveTrain(hold);
+            break;
+    }
+}
+
+void driveTrain::gyroTurn(int dir, double desiredPos){
+    double kp = 0.6; // controls how fast the program's rise time 
+    double kd = 0.00; // controls how fast the program reacts to approaching the targes
+
+
+    double error; // desirec Value - sensor value
+    double prev_Error = 0; // Error of last loop ran
+    double derivative; // Error - prevError
+    double MotorSpeed;
+
+    int errorCount = 0;
+
+    resetDrivePositions();
+    sensorControler->resetHeading();
+
+    //initial punch so gyro goes in the correct direction
+    pointTurn(dir, 75);
+    wait(30, msec);
+
+    int loopcount = 0;
+
+    while (errorCount<5){
+        // calculate error
+        error = desiredPos - sensorControler->getHeading(dir);
+
+        // calculate derivative
+        derivative = error - prev_Error;
+
+        // adjust motor speeds
+        MotorSpeed = (error * kp) + (derivative*kd);
+
+        
+        if (MotorSpeed < 1 && MotorSpeed > 0){MotorSpeed=1;}
+        if (MotorSpeed > -1 && MotorSpeed < 0){MotorSpeed=-1;}
+        
+
+        //Brain.Screen.setCursor(4, 1);
+        //Brain.Screen.print("error: %f", error);
+        //Brain.Screen.newLine();
+        //Brain.Screen.print("heading: %f", sensorControler->getHeading(dir));
+        
+        
+        if (loopcount==0){
+            Brain.Screen.print("heading: %.2f, ", sensorControler->getHeading(dir));
+            Brain.Screen.newLine();
+            Brain.Screen.print("motor speed: %.2f", MotorSpeed);
+            Brain.Screen.newLine();
+        }
+        loopcount++;
+        pointTurn(dir, MotorSpeed);
+
+        prev_Error = error;
+        if (error <3 && error > -3){
+            errorCount++;
+        }
+    }
+    stopDriveTrain(hold);
+    Brain.Screen.print("done");
+}
 
 /*-------------------------------------------------------------------------------*/
 /*----------------------------Driver Control Movements---------------------------*/

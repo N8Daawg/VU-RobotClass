@@ -44,7 +44,6 @@ void Robot::autonomous(){
     //driveT->driveStraight(1, 5, 15);      test successful
     //driveT->pointTurn(2,90,15);           test successful
     //driveT->sidePivot(1,90,15);           test successful
-    //driveT->driveArc(1, 28, 90, 15);      test successful
-
-    
+    //driveT->driveArc(1, 27, 90, 15);      test successful
+    driveT->gyroTurn(1, 90);
 }
